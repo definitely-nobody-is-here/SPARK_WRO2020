@@ -31,7 +31,8 @@ public class ModularIO {
     	
     	DegreesPerCM = (1 / (Math.PI * wheelDiameter)) * 360;
     	
-    	SampleProvider SensorRead = color2.getRedMode();
+    	SampleProvider ColorSensorRead2 = color2.getRedMode();
+    	SampleProvider ColorSensorRead2 = color3.getRedMode();
     	
     }
 }

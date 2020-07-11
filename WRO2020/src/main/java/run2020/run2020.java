@@ -11,7 +11,7 @@ public class run2020 {
         System.out.println("Checking Battery");
         System.out.println("Votage: " + Battery.getInstance().getVoltage());
         
-		ModularIO.Config(8.16); //9 & 10 are not final values, change them
+		ModularIO.Config(8.16, 9.5); //9 & 10 are not final values, change them
 		System.out.println("Motors configured");
 		
 		Delay.msDelay(100);
