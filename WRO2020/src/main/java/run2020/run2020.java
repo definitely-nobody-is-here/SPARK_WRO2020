@@ -15,7 +15,23 @@ public class run2020 {
 		System.out.println("Motors configured");
 		
 		Delay.msDelay(100);
-		Drive.CM(200, 200, 90);
+		Drive.CM(200, 200, 5);
+		Delay.msDelay(100);
+		Drive.CM(-200, -200, 5);
+		Delay.msDelay(100);
+		Drive.CM(200, -200, 5);
+		Delay.msDelay(100);
+		Drive.Continuous(100, 100);
+		Delay.msDelay(200);
+		Drive.Continuous(-100, -100);
+		Delay.msDelay(200);
+		Drive.Continuous(200, -200);
+		Delay.msDelay(200);
+		Drive.Stop();
+		Delay.msDelay(100);
+		Drive.Turn_angle(200, 90);
+		Drive.Turn_angle(200, -90);
+		
 
 	}
 

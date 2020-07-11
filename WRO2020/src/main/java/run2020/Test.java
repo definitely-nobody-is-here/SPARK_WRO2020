@@ -7,13 +7,7 @@ import lejos.robotics.SampleProvider;
 public class Test {
 
 	public static void main(String[] args) {
-		final EV3ColorSensor ColorSensor = new EV3ColorSensor(SensorPort.S2);
-		
-		SampleProvider sp = ColorSensor.getColorIDMode();
-		float[] sample = new float[sampleSize];
-		int value = 0;
-		
-		
+
 	}
 
 }
