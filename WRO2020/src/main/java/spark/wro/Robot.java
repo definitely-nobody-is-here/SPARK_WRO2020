@@ -110,7 +110,7 @@ public class Robot {
 	public void getEV3() {
 		//TODO:M
 	}
-	public void arc(float cm, int speed, int stopLine) {
+	public void arc(float direction, float cm, int speed, int stopLine) {
 		//TODO:M
 	}
 	public void reset() {
