@@ -5,6 +5,7 @@ import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.ev3.EV3ColorSensor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
+import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
 
 public class Robot {
@@ -38,14 +39,66 @@ public class Robot {
 	public void turn(int type, int degree, int stopLine) {
 		//TODO:J
 	}
-	public void followLine(float cm, int speed, int stopLine) {
+	public void followLine(float cm, int speed, int stopLine, int port) {
 		//TODO:M
+		//PID Settings
+		float kP = 1f;
+		float kI = 0.01f;
+		float kD = 1f;
+		
+		//Tacho Count
+		int wheelValue = 0;
+		
+		//Loop
+		while(wheelValue < cm) {
+			//Update Tacho Count
+			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
+			
+			//Color Sensor Values
+			float colorValue = readReflect(port);
+			
+			//Drive Robot
+		}
 	}
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		//TODO:M
 	}
-	public void readReflect(int port) {
+	public void setMode(int mode) {
+		
+	}
+	public int readReflect(int port) {
 		//TODO:J
+		SampleProvider sp = null;
+		//Switch ports
+		switch (port) {
+		case 1: {
+			sp = sensor1.getRedMode();
+			break;
+		}
+		case 2: {
+			sp = sensor2.getRedMode();
+			break;
+		}
+		case 3: {
+			sp = sensor3.getRedMode();
+			break;
+		}
+		case 4: {
+			sp = sensor4.getRedMode();
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + port);
+		}
+		
+		int sampleSize = sp.sampleSize();
+		float[] sample = new float[sampleSize];
+		int ReadValue;
+		//Read Sensor
+		sp.fetchSample(sample, 0);
+		ReadValue = (int) sample[0];
+		
+		return ReadValue;
 	}
 	public void readColor(int port) {
 		//TODO:J
