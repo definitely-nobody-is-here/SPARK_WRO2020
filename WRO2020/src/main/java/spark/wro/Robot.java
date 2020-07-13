@@ -58,13 +58,12 @@ public class Robot {
 			float colorValue = readReflect(port);
 			
 			//Drive Robot
+			arc(0,100,stopLine);
 		}
 	}
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		//TODO:M
 	}
-	public void readReflect(int port) {
-		//TODO:
 	public void setMode(int mode) {
 		
 	}
