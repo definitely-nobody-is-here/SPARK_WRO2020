@@ -1,5 +1,7 @@
 package spark.wro;
 
+import java.awt.List;
+
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.ev3.EV3ColorSensor;
@@ -19,6 +21,9 @@ public class Robot {
 	EV3ColorSensor sensor2 = new EV3ColorSensor(SensorPort.S2);
 	EV3ColorSensor sensor3 = new EV3ColorSensor(SensorPort.S3);
 	EV3ColorSensor sensor4 = new EV3ColorSensor(SensorPort.S4);
+	
+	float maxWhite = 0;
+	float maxBlack = 100;
 	
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
@@ -45,9 +50,15 @@ public class Robot {
 		float kP = 1f;
 		float kI = 0.01f;
 		float kD = 1f;
+		float integralDecay = 1 / 2;
 		
 		//Tacho Count
 		int wheelValue = 0;
+
+		//Create Variables
+		float error;
+		float pastError = 0;
+		float integralError = 0;
 		
 		//Loop
 		while(wheelValue < cm) {
@@ -57,8 +68,19 @@ public class Robot {
 			//Color Sensor Values
 			float colorValue = readReflect(port);
 			
+			//Calculate errors
+			float errorP = colorValue - (maxWhite + maxBlack) / 2;
+			float errorI = 0;
+			float errorD = 0;
+			
+			//Calculate Total Error
+			error = kP * errorP + kI * errorI + kD * errorD;
+			
+			//Make pastError error
+			pastError = integralError * integralDecay + errorP;
+			
 			//Drive Robot
-			arc(0,100,stopLine);
+			arc(error,0,100,stopLine);
 		}
 	}
 	public void turnMotor(int motor, float degree, int angularSpeed) {
@@ -106,11 +128,25 @@ public class Robot {
 	}
 	public void init() {
 		//TODO:
+		//Calibrate Color Sensors
+		calibrateColorSensor();
+	}
+	public void calibrateColorSensor() {
+		//Max White and Black Values
+		float maxWhiteValue = 0;
+		float maxBlackValue = 100;
+		
+		//Calibrate
+		//TODO:M stuff
+		
+		//Set Values
+		maxWhite = maxWhiteValue;
+		maxBlack = maxBlackValue;
 	}
 	public void getEV3() {
 		//TODO:M
 	}
-	public void arc(float direction, float cm, int speed, int stopLine) {
+	public void arc(float steering, float cm, int speed, int stopLine) {
 		//TODO:M
 	}
 	public void reset() {
