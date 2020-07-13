@@ -4,7 +4,7 @@ import lejos.robotics.SampleProvider;
 
 public final class ColorSensor extends ModularIO{
 	
-	public static int ReadIntensity() {
+	public int ReadIntensity() {
 		
 		SampleProvider sp = color2.getRedMode();
 		
@@ -19,7 +19,7 @@ public final class ColorSensor extends ModularIO{
 		
 	}
 
-//	public static float WaitUntilReflect(int intensity, String greaterORless) {
+//	public float WaitUntilReflect(int intensity, String greaterORless) {
 //		
 //		if (greaterORless == ">") {
 //
