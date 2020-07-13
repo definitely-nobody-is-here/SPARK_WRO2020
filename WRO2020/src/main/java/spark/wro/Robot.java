@@ -30,13 +30,13 @@ public class Robot {
 	}
 	
 	public void forward(float cm, int speed, int stopLine) {
-		//TODO:J
+		//TODO:
 	}
 	public void backward(float cm, int speed, int stopLine) {
-		//TODO:J
+		//TODO:
 	}
 	public void turn(int type, int degree, int stopLine) {
-		//TODO:J
+		//TODO:
 	}
 	public void followLine(float cm, int speed, int stopLine) {
 		//TODO:M
@@ -45,13 +45,13 @@ public class Robot {
 		//TODO:M
 	}
 	public void readReflect(int port) {
-		//TODO:J
+		//TODO:
 	}
 	public void readColor(int port) {
-		//TODO:J
+		//TODO:
 	}
 	public void init() {
-		//TODO:J
+		//TODO:
 	}
 	public void getEV3() {
 		//TODO:M
