@@ -70,14 +70,17 @@ public class Robot {
 			
 			//Calculate errors
 			float errorP = colorValue - (maxWhite + maxBlack) / 2;
-			float errorI = 0;
-			float errorD = 0;
+			float errorI = integralError;
+			float errorD = colorValue - (maxWhite + maxBlack) / 2;
 			
 			//Calculate Total Error
 			error = kP * errorP + kI * errorI + kD * errorD;
 			
 			//Make pastError error
-			pastError = integralError * integralDecay + errorP;
+			pastError = colorValue - (maxWhite + maxBlack) / 2;
+			
+			//Change integralError
+			integralError = integralError * integralDecay + colorValue - (maxWhite + maxBlack) / 2;
 			
 			//Drive Robot
 			arc(error,0,100,stopLine);
