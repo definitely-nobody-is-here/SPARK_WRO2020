@@ -18,6 +18,10 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.25")
     implementation("com.github.ev3dev-lang-java:ev3dev-lang-java:2.5.3")
     implementation("com.github.ev3dev-lang-java:lejos-navigation:0.2.0")
+
+    // test
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 
 apply from: './config.gradle'

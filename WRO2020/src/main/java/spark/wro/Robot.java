@@ -1,7 +1,6 @@
 
 package spark.wro;
 
-
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.Button;
@@ -26,67 +25,67 @@ public class Robot {
 	EV3ColorSensor sensor4 = new EV3ColorSensor(SensorPort.S4);
 
 	Button ev3Buttons = new Button();
-	
+
 	float maxWhite = 0;
 	float maxBlack = 100;
-	
+
 	SampleProvider ReadIntensity2 = sensor2.getRedMode();
 	SampleProvider ReadIntensity3 = sensor3.getRedMode();
 	SampleProvider ReadIntensity4 = sensor4.getRedMode();
 	SampleProvider ReadColor2 = sensor2.getColorIDMode();
 	SampleProvider ReadColor3 = sensor3.getColorIDMode();
 	SampleProvider ReadColor4 = sensor4.getColorIDMode();
-	
+
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
 	double DegreesPerCM = (1 / (Math.PI * wheelSize)) * 360;
 	boolean reversed = true;
-	
+
 	DifferentialPilot pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
-	
-	
+
 	public Robot() {
-		
+
 	}
-	
+
 	/**
 	 * @param cm
 	 * @param speed
 	 * @param stopLine
 	 */
 	public void forward(float cm, int speed, int stopLine) {
-		
+
 		pilot.setLinearSpeed(speed);
-		
-		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+
+		// determine stopping at line
+		if (stopLine != -1 && stopLine != 0 && stopLine != 1) {
 			pilot.forward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
-				//do nothing
+				// do nothing
 			}
 			switch (stopLine) {
 			case -1: {
 				while (readReflect(2) > 20) {
-					
+
 				}
 			}
 			case 0: {
 				while (readReflect(2) > 20 && readReflect(3) > 20) {
-					
+
 				}
 			}
 			case 1: {
 				while (readReflect(3) > 20) {
-					
+
 				}
 			}
-			pilot.stop();
+				pilot.stop();
 			}
-			} else {
+		} else {
 			pilot.travel(cm);
 		}
 
 	}
+
 	/**
 	 * @param cm
 	 * @param speed
@@ -95,43 +94,46 @@ public class Robot {
 	public void backward(float cm, int speed, int stopLine) {
 
 		pilot.setLinearSpeed(speed);
-		
-		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+
+		// determine stopping at line
+		if (stopLine != -1 && stopLine != 0 && stopLine != 1) {
 			pilot.backward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
-				//do nothing
+				// do nothing
 			}
 			switch (stopLine) {
 			case -1: {
 				while (readReflect(2) > 20) {
-					
+
 				}
 			}
 			case 0: {
 				while (readReflect(2) > 20 && readReflect(3) > 20) {
-					
+
 				}
 			}
 			case 1: {
 				while (readReflect(3) > 20) {
-					
+
 				}
 			}
-			pilot.stop();
-		}} else {
+				pilot.stop();
+			}
+		} else {
 			pilot.travel(cm);
 		}
 
 	}
+
 	/**
 	 * @param type
 	 * @param degree
 	 * @param stopLine
 	 */
 	public void turn(int type, int degree, int stopLine) {
-		//TODO:
+		// TODO:
 	}
+
 	/**
 	 * @param cm
 	 * @param speed
@@ -139,60 +141,63 @@ public class Robot {
 	 * @param port
 	 */
 	public void followLine(float cm, int speed, int stopLine, int port) {
-		//PID Settings
+		// PID Settings
 		float kP = 1f;
 		float kI = 0.01f;
 		float kD = 1f;
 		float integralDecay = 1 / 2;
-		
-		//Tacho Count
+
+		// Tacho Count
 		int wheelValue = 0;
 
-		//Create Variables
+		// Create Variables
 		float error;
 		float pastError = 0;
 		float integralError = 0;
-		
-		//Loop
-		while(wheelValue < cm) {
-			//Update Tacho Count
+
+		// Loop
+		while (wheelValue < cm) {
+			// Update Tacho Count
 			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
-			
-			//Color Sensor Values
+
+			// Color Sensor Values
 			float colorValue = readReflect(port);
-			
-			//Calculate errors
+
+			// Calculate errors
 			float errorP = colorValue - (maxWhite + maxBlack) / 2;
 			float errorI = integralError;
 			float errorD = colorValue - (maxWhite + maxBlack) / 2;
-			
-			//Calculate Total Error
+
+			// Calculate Total Error
 			error = kP * errorP + kI * errorI + kD * errorD;
-			
-			//Make pastError error
+
+			// Make pastError error
 			pastError = colorValue - (maxWhite + maxBlack) / 2;
-			
-			//Change integralError
+
+			// Change integralError
 			integralError = integralError * integralDecay + colorValue - (maxWhite + maxBlack) / 2;
-			
-			//Drive Robot
-			arc(error,0,100,stopLine);
+
+			// Drive Robot
+			arc(error, 0, 100, stopLine);
 		}
 	}
+
 	/**
 	 * @param motor
 	 * @param degree
 	 * @param angularSpeed
 	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
-		//TODO:M
+		// TODO:M
 	}
+
 	/**
 	 * @param mode
 	 */
 	public void setMode(int mode) {
-		
+
 	}
+
 	/**
 	 * @param port
 	 * @return
@@ -224,6 +229,7 @@ public class Robot {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
+
 	/**
 	 * @param port
 	 * @return
@@ -255,35 +261,38 @@ public class Robot {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
+
 	/**
 	 * 
 	 */
 	public void init() {
-		//TODO:
-		//Calibrate Color Sensors
+		// TODO:
+		// Calibrate Color Sensors
 		calibrateColorSensor();
 	}
+
 	/**
 	 * 
 	 */
 	public void calibrateColorSensor() {
-		//Max White and Black Values
+		// Max White and Black Values
 		float maxWhiteValue = 0;
 		float maxBlackValue = 100;
-		
-		//Calibrate
-		
-		
-		//Set Values
+
+		// Calibrate
+
+		// Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 	}
+
 	/**
 	 * 
 	 */
 	public void getEV3() {
-		//TODO:M
+		// TODO:M
 	}
+
 	/**
 	 * @param steering
 	 * @param cm
@@ -291,24 +300,27 @@ public class Robot {
 	 * @param stopLine
 	 */
 	public void arc(float steering, float cm, int speed, int stopLine) {
-		//TODO:M
+		// TODO:M
 	}
+
 	/**
 	 * 
 	 */
 	public void reset() {
-		//TODO:none
+		// TODO:none
 	}
+
 	/**
 	 * 
 	 */
 	public void align() {
-		//TODO:M
+		// TODO:M
 	}
+
 	/**
 	 * 
 	 */
 	public void square() {
-		//TODO:M
+		// TODO:M
 	}
 }
