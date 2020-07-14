@@ -20,18 +20,36 @@ public class Robot {
 	EV3ColorSensor sensor3 = new EV3ColorSensor(SensorPort.S3);
 	EV3ColorSensor sensor4 = new EV3ColorSensor(SensorPort.S4);
 	
+	SampleProvider ReadIntensity2 = color2.getRedMode();
+	SampleProvider ReadIntensity3 = color3.getRedMode();
+	SampleProvider ReadColor2 = color2.getColorIDMode();
+	SampleProvider ReadColor3 = color3.getColorIDMode();
+	
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
-	boolean reverse = true;
+	boolean reversed = true;
 	
 	DifferentialPilot pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
+	
 	
 	public Robot() {
 		
 	}
 	
 	public void forward(float cm, int speed, int stopLine) {
-		//TODO:
+		
+		pilot.setLinearSpeed(speed);
+		
+		//determine stopping at line
+		if (stopLine) {
+			pilot.forward();
+			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * )) {
+			
+		} else {
+			pilot.travel(cm);
+		}
+
+		}
 	}
 	public void backward(float cm, int speed, int stopLine) {
 		//TODO:
@@ -40,7 +58,6 @@ public class Robot {
 		//TODO:
 	}
 	public void followLine(float cm, int speed, int stopLine, int port) {
-		//TODO:M
 		//PID Settings
 		float kP = 1f;
 		float kI = 0.01f;
@@ -68,41 +85,52 @@ public class Robot {
 		
 	}
 	public int readReflect(int port) {
-		//TODO:
-		SampleProvider sp = null;
-		//Switch ports
 		switch (port) {
 		case 1: {
-			sp = sensor1.getRedMode();
-			break;
+			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 		case 2: {
-			sp = sensor2.getRedMode();
-			break;
+			int samples = ReadIntensity2.sampleSize();
+			float[] sample = new float[samples];
+			ReadIntensity2.fetchSample(sample, 0);
+			return (int) sample[0];
 		}
 		case 3: {
-			sp = sensor3.getRedMode();
-			break;
+			int samples = ReadIntensity3.sampleSize();
+			float[] sample = new float[samples];
+			ReadIntensity3.fetchSample(sample, 0);
+			return (int) sample[0];
 		}
 		case 4: {
-			sp = sensor4.getRedMode();
-			break;
+			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
-		
-		int sampleSize = sp.sampleSize();
-		float[] sample = new float[sampleSize];
-		int ReadValue;
-		//Read Sensor
-		sp.fetchSample(sample, 0);
-		ReadValue = (int) sample[0];
-		
-		return ReadValue;
 	}
-	public void readColor(int port) {
-		//TODO:
+	public String fhgfadklgvnrgkhagkhahLSGQRAGHFDHGHADGreadColor(int port) {
+		switch (port) {
+		case 1: {
+			throw new IllegalArgumentException("Unexpected value: " + port);
+		}
+		case 2: {
+			int samples = ReadColor2.sampleSize();
+			float[] sample = new float[samples];
+			ReadColor2.fetchSample(sample, 0);
+			return (String) sample[0];
+		}
+		case 3: {
+			int samples = ReadColor3.sampleSize();
+			float[] sample = new float[samples];
+			ReadColor3.fetchSample(sample, 0);
+			return sample[0];
+		}
+		case 4: {
+			throw new IllegalArgumentException("Unexpected value: " + port);
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + port);
+		}
 	}
 	public void init() {
 		//TODO:
