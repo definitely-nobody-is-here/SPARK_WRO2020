@@ -36,6 +36,7 @@ public class Robot {
 	
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
+	double DegreesPerCM = (1 / (Math.PI * wheelSize)) * 360;
 	boolean reversed = true;
 	
 	DifferentialPilot pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
@@ -52,8 +53,13 @@ public class Robot {
 		//determine stopping at line
 		if (stopLine) {
 			pilot.forward();
-			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * )) {
-			
+			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (centimeters * DegreesPerCM)) {
+				//do nothing
+			}
+			switch (stopLine) {
+			case -1: {
+				
+			}
 		} else {
 			pilot.travel(cm);
 		}

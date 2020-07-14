@@ -1,6 +1,6 @@
 package run2020.ModularIO;
 
-/** Below - Methods:
+/** Below - Methods for ModularIO:
 	ModularIO.Config(Wheel diameter cm, wheel relative distance cm)
 		wheel diameter is entered in centimeters; wheel distance is the distance between the wheel's centers
 	Drive.CM(powerLeft, powerRight, cm, stop at line)

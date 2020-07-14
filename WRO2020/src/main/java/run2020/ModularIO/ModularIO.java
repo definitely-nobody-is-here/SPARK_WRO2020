@@ -1,6 +1,7 @@
 package run2020.ModularIO;
 
 
+
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.ev3.EV3ColorSensor;
@@ -11,6 +12,11 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import java.lang.Math;
+
+/**
+ * ModularIO.Config(Wheel diameter cm, wheel relative distance cm)
+ * wheel diameter is entered in centimeters; wheel distance is the distance between the wheel's centers
+*/
 
 public class ModularIO {
 	
