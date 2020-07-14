@@ -1,14 +1,16 @@
 package spark.wro;
 
-import java.awt.List;
 
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
+import ev3dev.sensors.Button;
 import ev3dev.sensors.ev3.EV3ColorSensor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
+import lejos.hardware.Keys;
+import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
 
@@ -21,6 +23,8 @@ public class Robot {
 	EV3ColorSensor sensor2 = new EV3ColorSensor(SensorPort.S2);
 	EV3ColorSensor sensor3 = new EV3ColorSensor(SensorPort.S3);
 	EV3ColorSensor sensor4 = new EV3ColorSensor(SensorPort.S4);
+
+	Button ev3Buttons = new Button();
 	
 	float maxWhite = 0;
 	float maxBlack = 100;
@@ -45,7 +49,6 @@ public class Robot {
 		//TODO:
 	}
 	public void followLine(float cm, int speed, int stopLine, int port) {
-		//TODO:M
 		//PID Settings
 		float kP = 1f;
 		float kI = 0.01f;
