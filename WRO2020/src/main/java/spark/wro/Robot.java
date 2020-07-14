@@ -50,13 +50,16 @@ public class Robot {
 	}
 	
 	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
+	 * moves robot forwards
+	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
+	 * @param speed | between one and 700
+	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 */
 	public void forward(float cm, int speed, int stopLine) {
 		
 		pilot.setLinearSpeed(speed);
+		motorB.resetTachoCount();
+		motorC.resetTachoCount();
 		
 		//determine stopping at line
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
@@ -82,24 +85,27 @@ public class Robot {
 			}
 			pilot.stop();
 			}
-			} else {
+		} else {
 			pilot.travel(cm);
 		}
 
 	}
 	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
+	 * moves the robot backwards
+	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
+	 * @param speed | between one and 700
+	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 */
 	public void backward(float cm, int speed, int stopLine) {
 
 		pilot.setLinearSpeed(speed);
+		motorB.resetTachoCount();
+		motorC.resetTachoCount();
 		
 		//determine stopping at line
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.backward();
-			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
+			while ((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2 < (cm * DegreesPerCM)) {
 				//do nothing
 			}
 			switch (stopLine) {
@@ -119,26 +125,48 @@ public class Robot {
 				}
 			}
 			pilot.stop();
-		}} else {
+			}
+		} else {
 			pilot.travel(cm);
 		}
 
 	}
 	/**
-	 * @param type
-	 * @param degree
-	 * @param stopLine
+	 * turns the robot
+	 * @param type | -1 means left wheel, 0 means both, 1 means right wheel
+	 * @param degree | positive is right turn, negative is left turn
+	 * @param stopLine | -1 means left sensor, 0 means don't search for line, 1 means right sensor
 	 */
 	public void turn(int type, int degree, int stopLine) {
-		//TODO:
+
+		pilot.setLinearSpeed(100);
+		motorB.resetTachoCount();
+		motorC.resetTachoCount();
+		
+		//determine turn type
+		switch (type) {
+		case -1: {
+			while (Math.abs(motorB.getTachoCount()))
+		}
+		case 0: {
+			
+		}
+		case 1: {
+			
+		}
+
+	}
 	}
 	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
-	 * @param port
+	 * follows a line in front of the robot with sensors
+	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
+	 * @param speed | between one and 700
+	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
+	 * @param port | N/A
 	 */
 	public void followLine(float cm, int speed, int stopLine, int port) {
+		//          why is this a one-sensor thing?
+		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each otehr
 		//PID Settings
 		float kP = 1f;
 		float kI = 0.01f;
