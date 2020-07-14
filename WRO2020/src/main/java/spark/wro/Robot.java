@@ -29,10 +29,12 @@ public class Robot {
 	float maxWhite = 0;
 	float maxBlack = 100;
 	
-	SampleProvider ReadIntensity2 = color2.getRedMode();
-	SampleProvider ReadIntensity3 = color3.getRedMode();
-	SampleProvider ReadColor2 = color2.getColorIDMode();
-	SampleProvider ReadColor3 = color3.getColorIDMode();
+	SampleProvider ReadIntensity2 = sensor2.getRedMode();
+	SampleProvider ReadIntensity3 = sensor3.getRedMode();
+	SampleProvider ReadIntensity4 = sensor4.getRedMode();
+	SampleProvider ReadColor2 = sensor2.getColorIDMode();
+	SampleProvider ReadColor3 = sensor3.getColorIDMode();
+	SampleProvider ReadColor4 = sensor4.getColorIDMode();
 	
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
@@ -50,15 +52,15 @@ public class Robot {
 		pilot.setLinearSpeed(speed);
 		
 		//determine stopping at line
-		if (stopLine) {
+		if(stopLine){
 			pilot.forward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * )) {
-			
-		} else {
+			}
+		}
+		else {
 			pilot.travel(cm);
 		}
 
-		}
 	}
 	public void backward(float cm, int speed, int stopLine) {
 		//TODO:
@@ -131,13 +133,16 @@ public class Robot {
 			return (int) sample[0];
 		}
 		case 4: {
-			throw new IllegalArgumentException("Unexpected value: " + port);
+			int samples = ReadIntensity4.sampleSize();
+			float[] sample = new float[samples];
+			ReadIntensity4.fetchSample(sample, 0);
+			return (int) sample[0];
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
-	public String fhgfadklgvnrgkhagkhahLSGQRAGHFDHGHADGreadColor(int port) {
+	public float readColor(int port) {
 		switch (port) {
 		case 1: {
 			throw new IllegalArgumentException("Unexpected value: " + port);
@@ -146,7 +151,7 @@ public class Robot {
 			int samples = ReadColor2.sampleSize();
 			float[] sample = new float[samples];
 			ReadColor2.fetchSample(sample, 0);
-			return (String) sample[0];
+			return sample[0];
 		}
 		case 3: {
 			int samples = ReadColor3.sampleSize();
@@ -155,7 +160,10 @@ public class Robot {
 			return sample[0];
 		}
 		case 4: {
-			throw new IllegalArgumentException("Unexpected value: " + port);
+			int samples = ReadColor4.sampleSize();
+			float[] sample = new float[samples];
+			ReadColor4.fetchSample(sample, 0);
+			return sample[0];
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + port);
