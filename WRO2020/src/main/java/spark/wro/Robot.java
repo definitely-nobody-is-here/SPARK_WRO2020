@@ -1,6 +1,8 @@
 
 package spark.wro;
 
+import org.slf4j.Logger;
+
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.Button;
@@ -13,6 +15,7 @@ import lejos.hardware.Keys;
 import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
+	private final static Logger LOG = null;
 
 	EV3MediumRegulatedMotor motorA = new EV3MediumRegulatedMotor(MotorPort.A);
 	EV3LargeRegulatedMotor motorB = new EV3LargeRegulatedMotor(MotorPort.B);
