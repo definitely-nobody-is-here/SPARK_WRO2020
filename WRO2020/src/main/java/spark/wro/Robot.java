@@ -61,14 +61,16 @@ public class Robot {
 		//determine stopping at line
 		if(stopLine){
 			pilot.forward();
-			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (centimeters * DegreesPerCM)) {
+			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
 				//do nothing
 			}
 			switch (stopLine) {
 			case -1: {
 				
 			}
-		} else {
+			}
+		}
+		else {
 			pilot.travel(cm);
 		}
 
