@@ -1,3 +1,4 @@
+
 package spark.wro;
 
 
@@ -47,6 +48,11 @@ public class Robot {
 		
 	}
 	
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void forward(float cm, int speed, int stopLine) {
 		
 		pilot.setLinearSpeed(speed);
@@ -62,12 +68,28 @@ public class Robot {
 		}
 
 	}
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void backward(float cm, int speed, int stopLine) {
 		//TODO:
 	}
+	/**
+	 * @param type
+	 * @param degree
+	 * @param stopLine
+	 */
 	public void turn(int type, int degree, int stopLine) {
 		//TODO:
 	}
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 * @param port
+	 */
 	public void followLine(float cm, int speed, int stopLine, int port) {
 		//PID Settings
 		float kP = 1f;
@@ -109,12 +131,24 @@ public class Robot {
 			arc(error,0,100,stopLine);
 		}
 	}
+	/**
+	 * @param motor
+	 * @param degree
+	 * @param angularSpeed
+	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		//TODO:M
 	}
+	/**
+	 * @param mode
+	 */
 	public void setMode(int mode) {
 		
 	}
+	/**
+	 * @param port
+	 * @return
+	 */
 	public int readReflect(int port) {
 		switch (port) {
 		case 1: {
@@ -142,6 +176,10 @@ public class Robot {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
+	/**
+	 * @param port
+	 * @return
+	 */
 	public float readColor(int port) {
 		switch (port) {
 		case 1: {
@@ -169,35 +207,59 @@ public class Robot {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
+	/**
+	 * 
+	 */
 	public void init() {
 		//TODO:
 		//Calibrate Color Sensors
 		calibrateColorSensor();
 	}
+	/**
+	 * 
+	 */
 	public void calibrateColorSensor() {
 		//Max White and Black Values
 		float maxWhiteValue = 0;
 		float maxBlackValue = 100;
 		
 		//Calibrate
-		//TODO:M stuff
+		
 		
 		//Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 	}
+	/**
+	 * 
+	 */
 	public void getEV3() {
 		//TODO:M
 	}
+	/**
+	 * @param steering
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void arc(float steering, float cm, int speed, int stopLine) {
 		//TODO:M
 	}
+	/**
+	 * 
+	 */
 	public void reset() {
 		//TODO:none
 	}
+	/**
+	 * 
+	 */
 	public void align() {
 		//TODO:M
 	}
+	/**
+	 * 
+	 */
 	public void square() {
 		//TODO:M
 	}
