@@ -1,3 +1,4 @@
+
 package spark.wro;
 
 
@@ -29,10 +30,12 @@ public class Robot {
 	float maxWhite = 0;
 	float maxBlack = 100;
 	
-	SampleProvider ReadIntensity2 = color2.getRedMode();
-	SampleProvider ReadIntensity3 = color3.getRedMode();
-	SampleProvider ReadColor2 = color2.getColorIDMode();
-	SampleProvider ReadColor3 = color3.getColorIDMode();
+	SampleProvider ReadIntensity2 = sensor2.getRedMode();
+	SampleProvider ReadIntensity3 = sensor3.getRedMode();
+	SampleProvider ReadIntensity4 = sensor4.getRedMode();
+	SampleProvider ReadColor2 = sensor2.getColorIDMode();
+	SampleProvider ReadColor3 = sensor3.getColorIDMode();
+	SampleProvider ReadColor4 = sensor4.getColorIDMode();
 	
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
@@ -46,12 +49,17 @@ public class Robot {
 		
 	}
 	
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void forward(float cm, int speed, int stopLine) {
 		
 		pilot.setLinearSpeed(speed);
 		
 		//determine stopping at line
-		if (stopLine) {
+		if(stopLine){
 			pilot.forward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (centimeters * DegreesPerCM)) {
 				//do nothing
@@ -64,14 +72,29 @@ public class Robot {
 			pilot.travel(cm);
 		}
 
-		}
 	}
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void backward(float cm, int speed, int stopLine) {
 		//TODO:
 	}
+	/**
+	 * @param type
+	 * @param degree
+	 * @param stopLine
+	 */
 	public void turn(int type, int degree, int stopLine) {
 		//TODO:
 	}
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 * @param port
+	 */
 	public void followLine(float cm, int speed, int stopLine, int port) {
 		//PID Settings
 		float kP = 1f;
@@ -113,12 +136,24 @@ public class Robot {
 			arc(error,0,100,stopLine);
 		}
 	}
+	/**
+	 * @param motor
+	 * @param degree
+	 * @param angularSpeed
+	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		//TODO:M
 	}
+	/**
+	 * @param mode
+	 */
 	public void setMode(int mode) {
 		
 	}
+	/**
+	 * @param port
+	 * @return
+	 */
 	public int readReflect(int port) {
 		switch (port) {
 		case 1: {
@@ -137,13 +172,20 @@ public class Robot {
 			return (int) sample[0];
 		}
 		case 4: {
-			throw new IllegalArgumentException("Unexpected value: " + port);
+			int samples = ReadIntensity4.sampleSize();
+			float[] sample = new float[samples];
+			ReadIntensity4.fetchSample(sample, 0);
+			return (int) sample[0];
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
-	public String fhgfadklgvnrgkhagkhahLSGQRAGHFDHGHADGreadColor(int port) {
+	/**
+	 * @param port
+	 * @return
+	 */
+	public float readColor(int port) {
 		switch (port) {
 		case 1: {
 			throw new IllegalArgumentException("Unexpected value: " + port);
@@ -152,7 +194,7 @@ public class Robot {
 			int samples = ReadColor2.sampleSize();
 			float[] sample = new float[samples];
 			ReadColor2.fetchSample(sample, 0);
-			return (String) sample[0];
+			return sample[0];
 		}
 		case 3: {
 			int samples = ReadColor3.sampleSize();
@@ -161,41 +203,68 @@ public class Robot {
 			return sample[0];
 		}
 		case 4: {
-			throw new IllegalArgumentException("Unexpected value: " + port);
+			int samples = ReadColor4.sampleSize();
+			float[] sample = new float[samples];
+			ReadColor4.fetchSample(sample, 0);
+			return sample[0];
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 	}
+	/**
+	 * 
+	 */
 	public void init() {
 		//TODO:
 		//Calibrate Color Sensors
 		calibrateColorSensor();
 	}
+	/**
+	 * 
+	 */
 	public void calibrateColorSensor() {
 		//Max White and Black Values
 		float maxWhiteValue = 0;
 		float maxBlackValue = 100;
 		
 		//Calibrate
-		//TODO:M stuff
+		
 		
 		//Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 	}
+	/**
+	 * 
+	 */
 	public void getEV3() {
 		//TODO:M
 	}
+	/**
+	 * @param steering
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
 	public void arc(float steering, float cm, int speed, int stopLine) {
 		//TODO:M
 	}
+	/**
+	 * 
+	 */
 	public void reset() {
 		//TODO:none
 	}
+	/**
+	 * 
+	 */
 	public void align() {
 		//TODO:M
 	}
+	/**
+	 * 
+	 */
 	public void square() {
 		//TODO:M
 	}
