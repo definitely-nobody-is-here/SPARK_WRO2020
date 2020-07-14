@@ -10,6 +10,7 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
+import lejos.utility.Delay;
 import lejos.hardware.Keys;
 import lejos.hardware.lcd.CommonLCD;
 
@@ -54,7 +55,7 @@ public class Robot {
 	 * @param speed
 	 * @param stopLine
 	 */
-	public void forward(float cm, int speed, int stopLine) {
+	public void travel(float cm, int speed, int stopLine) {
 		
 		pilot.setLinearSpeed(speed);
 		
@@ -73,6 +74,19 @@ public class Robot {
 		else {
 			pilot.travel(cm);
 		}
+
+	}
+	/**
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
+	 */
+	public void forward(int speed) {
+		//Set the speed
+		pilot.setLinearSpeed(speed);
+		
+		//Move Forward
+		pilot.forward();
 
 	}
 	/**
@@ -231,7 +245,25 @@ public class Robot {
 		float maxBlackValue = 100;
 		
 		//Calibrate
+		pilot.forward();
 		
+		//Read Values
+		int i = 1000;
+		float colorValue;
+		while(i > 0) {
+			i -= 1;
+			colorValue = readReflect(2);
+			if(colorValue > maxWhiteValue) {
+				maxWhiteValue = colorValue;
+			}
+			if(colorValue < maxBlackValue) {
+				maxBlackValue = colorValue;
+			}
+            Delay.msDelay(10);
+		}
+		
+		//Stop Pilot
+		pilot.stop();
 		
 		//Set Values
 		maxWhite = maxWhiteValue;
