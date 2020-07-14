@@ -6,8 +6,6 @@ public final class Drive extends ModularIO {
 		
 		if (Math.abs(power) > 700) {
 			throw new IllegalArgumentException("Value " + power + "exceeds parameter limits");
-			System.exit(1);
-			
 		} 
 	}
 
