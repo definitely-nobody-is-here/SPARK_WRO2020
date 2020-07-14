@@ -59,15 +59,28 @@ public class Robot {
 		pilot.setLinearSpeed(speed);
 		
 		//determine stopping at line
-		if(stopLine){
+		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.forward();
-			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (centimeters * DegreesPerCM)) {
+			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
 				//do nothing
 			}
 			switch (stopLine) {
 			case -1: {
-				
+				while (readReflect(2) > 20) {
+					
+				}
 			}
+			case 0: {
+				while (readReflect(2) > 20 && readReflect(3) > 20) {
+					
+				}
+			}
+			case 1: {
+				while (readReflect(3)) > 20) {
+					
+				}
+			}
+			pilot.stop();
 		} else {
 			pilot.travel(cm);
 		}
