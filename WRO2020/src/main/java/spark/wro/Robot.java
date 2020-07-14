@@ -76,12 +76,13 @@ public class Robot {
 				}
 			}
 			case 1: {
-				while (readReflect(3)) > 20) {
+				while (readReflect(3) > 20) {
 					
 				}
 			}
 			pilot.stop();
-		} else {
+			}
+			} else {
 			pilot.travel(cm);
 		}
 
@@ -113,12 +114,12 @@ public class Robot {
 				}
 			}
 			case 1: {
-				while (readReflect(3)) > 20) {
+				while (readReflect(3) > 20) {
 					
 				}
 			}
 			pilot.stop();
-		} else {
+		}} else {
 			pilot.travel(cm);
 		}
 
