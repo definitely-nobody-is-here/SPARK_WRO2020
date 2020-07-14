@@ -8,4 +8,4 @@ build
 bin
 
 # Ignore Eclipse .settings directory
-.settings
+# .settings
