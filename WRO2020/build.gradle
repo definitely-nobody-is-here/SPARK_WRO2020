@@ -1,33 +1,38 @@
 plugins {
     id 'java'
     id 'eclipse'
-    id 'idea'
-    id "net.ossindex.audit" version "0.4.5-beta"
-    id "com.github.johnrengelman.shadow" version "4.0.3"
+    id "net.ossindex.audit" version "0.4.11"
+    id "com.github.johnrengelman.shadow" version "6.0.0"
     id 'org.hidetake.ssh' version '2.10.1'
 }
 
 version = '1.0.0'
 
 repositories {
-    maven { url "https://jitpack.io" }
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.25")
     implementation("com.github.ev3dev-lang-java:ev3dev-lang-java:2.5.3")
     implementation("com.github.ev3dev-lang-java:lejos-navigation:0.2.0")
+
+    // test
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 
-apply from: './config.gradle'
-
-compileJava.options.encoding = 'UTF-8'
+eclipse {
+    classpath.downloadJavadoc = true
+    classpath.downloadSources = true
+}
 
 //Compile
 compileJava {
     sourceCompatibility = 11
     targetCompatibility = 11
+    options.encoding = 'UTF-8'
 }
 
 //Jar
