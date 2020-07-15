@@ -7,9 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RobotTest {
+	
+	private Robot robot = null;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		robot = new Robot();
 	}
 
 	@AfterEach

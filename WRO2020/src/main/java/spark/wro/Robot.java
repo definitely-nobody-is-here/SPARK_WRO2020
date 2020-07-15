@@ -11,7 +11,6 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
-import lejos.utility.Delay;
 import lejos.hardware.Keys;
 import lejos.hardware.lcd.CommonLCD;
 
@@ -43,12 +42,12 @@ public class Robot {
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
 	double DegreesPerCM = (1 / (Math.PI * wheelSize)) * 360;
+	double CMPerDegree = ((Math.PI * trackWidth) / 360);
 	boolean reversed = true;
 
 	DifferentialPilot pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
 
 	public Robot() {
-
 	}
 
 	/**
@@ -99,19 +98,6 @@ public class Robot {
 	 * @param speed | between one and 700
 	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 */
-	public void forward(int speed) {
-		//Set the speed
-		pilot.setLinearSpeed(speed);
-		
-		//Move Forward
-		pilot.forward();
-
-	}
-	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
-	 */
 	public void backward(float cm, int speed, int stopLine) {
 
 		pilot.setLinearSpeed(speed);
@@ -150,11 +136,11 @@ public class Robot {
 
 	/**
 	 * turns the robot
-	 * @param type | -1 means left wheel, 0 means both, 1 means right wheel
+	 * @param type -1 means left wheel, 0 means both, 1 means right wheel
 	 * @param degree | positive is right turn, negative is left turn
 	 * @param stopLine | -1 means left sensor, 0 means don't search for line, 1 means right sensor
 	 */
-	public void turn(int type, int degree, int stopLine) {
+	public void turn(int type, int degrees, int stopLine) {
 
 		pilot.setLinearSpeed(100);
 		motorB.resetTachoCount();
@@ -163,7 +149,9 @@ public class Robot {
 		//determine turn type
 		switch (type) {
 		case -1: {
-			while (Math.abs(motorB.getTachoCount()))
+			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {
+				
+			}
 		}
 		case 0: {
 			
@@ -322,29 +310,10 @@ public class Robot {
 		// Max White and Black Values
 		float maxWhiteValue = 0;
 		float maxBlackValue = 100;
-		
-		//Calibrate
-		pilot.forward();
-		
-		//Read Values
-		int i = 1000;
-		float colorValue;
-		while(i > 0) {
-			i -= 1;
-			colorValue = readReflect(2);
-			if(colorValue > maxWhiteValue) {
-				maxWhiteValue = colorValue;
-			}
-			if(colorValue < maxBlackValue) {
-				maxBlackValue = colorValue;
-			}
-            Delay.msDelay(10);
-		}
-		
-		//Stop Pilot
-		pilot.stop();
-		
-		//Set Values
+
+		// Calibrate
+
+		// Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 	}
