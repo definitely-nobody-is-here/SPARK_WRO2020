@@ -22,7 +22,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="bin/default"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12/"/>
 	<classpathentry sourcepath="C:/Users/jacki/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.25/af3cd3ad1ea4b08b27b54f12529b4bf343bc5ca1/slf4j-simple-1.7.25-sources.jar" kind="lib" path="C:/Users/jacki/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.25/8dacf9514f0c707cbbcdd6fd699e8940d42fb54e/slf4j-simple-1.7.25.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/jacki/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.25/4e93a4a1e34a8244b264cd3d46c244fca1083829/slf4j-simple-1.7.25-javadoc.jar!/"/>

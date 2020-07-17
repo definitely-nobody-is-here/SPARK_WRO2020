@@ -3,6 +3,7 @@ package run2020;
 import ev3dev.sensors.Battery;
 import lejos.utility.Delay;
 import run2020.ModularIO.*;
+import spark.wro.*;
 
 public class run2020 {
 
@@ -11,11 +12,11 @@ public class run2020 {
         System.out.println("Checking Battery");
         System.out.println("Votage: " + Battery.getInstance().getVoltage());
         
-        ModularIO Robot = new ModularIO();
+        Robot robot = new Robot();
         
+        robot.forward(50f, 450, 2147483647);
+        robot.backward(50, 450, 2147483647);
         
-        new Drive().CM(-200, -200, 50, false);
-        new Drive().CM(100, -100, 20, false);
 	}
 
 }
