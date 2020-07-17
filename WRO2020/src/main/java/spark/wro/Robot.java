@@ -251,7 +251,7 @@ public class Robot {
 	 */
 	public void followLine(float cm, int speed, int stopLine, int port) {
 		//          why is this a one-sensor thing?
-		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each otehr
+		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		//PID Settings
 		float kP = 1f;
 		float kI = 0.01f;
