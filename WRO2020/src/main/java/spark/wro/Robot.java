@@ -306,7 +306,7 @@ public class Robot {
 			integralError = integralError * integralDecay + colorValue - (maxWhite + maxBlack) / 2;
 
 			// Drive Robot
-			steer(error, 100, 0);
+			steer(error, 100, 0, true);
 		}
 	}
 
@@ -431,24 +431,16 @@ public class Robot {
 	public void getEV3() {
 		// TODO:M
 	}
-
+	
 	/**
 	 * @param steering
-	 * @param cm
 	 * @param speed
 	 * @param stopLine
+	 * @param immediateReturn
 	 */
-	public void steer(float steering, int speed, int stopLine) {
+	public void steer(float steering, int speed, int stopLine, boolean immediateReturn) {
 		// TODO:M
-		if(steering > 0) {
-			pilot.arc(steering, 10, true);
-		}
-		if(steering < 0) {
-			pilot.arc(steering, 10, true);
-		}
-		if(steering == 0) {
-			pilot.forward();
-		}
+		pilot.arc(steering, 10, immediateReturn);
 	}
 
 	/**
