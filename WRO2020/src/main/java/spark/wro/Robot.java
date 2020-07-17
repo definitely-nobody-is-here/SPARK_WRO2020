@@ -215,9 +215,9 @@ public class Robot {
 
 	/**
 	 * turns the robot
-	 * @param type -1 means left wheel, 0 means both, 1 means right wheel
+	 * @param type | -1 means left wheel, 0 means both, 1 means right wheel
 	 * @param degree | positive is right turn, negative is left turn
-	 * @param stopLine | -1 means left sensor, 0 means don't search for line, 1 means right sensor
+	 * @param stopLine | -1 means left sensor, 0 means don't search for line, 1 means right sensor *doesn't apply to -1 and 1 turn values*
 	 */
 	public void turn(int type, int degrees, int stopLine) {
 
@@ -228,6 +228,7 @@ public class Robot {
 		//determine turn type
 		switch (type) {
 		case -1: {
+			motorB.forward();
 			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {
 				
 			}
