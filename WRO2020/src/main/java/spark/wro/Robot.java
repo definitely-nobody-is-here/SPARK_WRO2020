@@ -264,9 +264,10 @@ public class Robot {
 	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
 	 * @param speed | between one and 700
 	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
-	 * @param port | N/A
+	 * @param port1 | Left sensor port
+	 * @param port2 | Right sensor port, 0 means only one sensor
 	 */
-	public void followLine(float cm, int speed, int stopLine, int port) {
+	public void followLine(float cm, int speed, int stopLine, int port1, int port2) {
 		//          why is this a one-sensor thing?
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		//PID Settings
@@ -289,21 +290,31 @@ public class Robot {
 			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
 
 			// Color Sensor Values
-			float colorValue = readReflect(port);
+			float colorValue = 0;
+			if(port2 != 0) {
+				float colorL = readReflect(port1);
+				float colorR = readReflect(port2);
+				colorValue = colorL - colorR;
+			}
+			else {
+
+				float colorL = readReflect(port1);
+				colorValue = colorL - (maxWhite + maxBlack) / 2;
+			}
 
 			// Calculate errors
-			float errorP = colorValue - (maxWhite + maxBlack) / 2;
+			float errorP = colorValue;
 			float errorI = integralError;
-			float errorD = colorValue - (maxWhite + maxBlack) / 2;
+			float errorD = pastError - colorValue;
 
 			// Calculate Total Error
 			error = kP * errorP + kI * errorI + kD * errorD;
 
 			// Make pastError error
-			pastError = colorValue - (maxWhite + maxBlack) / 2;
+			pastError = colorValue;
 
 			// Change integralError
-			integralError = integralError * integralDecay + colorValue - (maxWhite + maxBlack) / 2;
+			integralError = integralError * integralDecay + colorValue;
 
 			// Drive Robot
 			steer(error, 100, 0, true);
