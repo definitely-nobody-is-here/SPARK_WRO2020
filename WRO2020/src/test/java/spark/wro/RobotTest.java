@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 
 class RobotTest {
 	
-	private Robot robot = null;
+	private Rbot robot = null;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		robot = new Robot();
+		robot = new Rbot();
 	}
 
 	@AfterEach
