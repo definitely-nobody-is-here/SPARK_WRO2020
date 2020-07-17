@@ -2,4 +2,4 @@ Manifest-Version: 1.0
 Implementation-Title: WRO2020
 Implementation-Version: 1.0.0
 Implementation-Vendor: Spark
-Main-Class: run2020.Test
+Main-Class: run2020.run2020
