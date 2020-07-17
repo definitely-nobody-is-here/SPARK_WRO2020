@@ -8,7 +8,7 @@ public class Test {
 	public static void main(String[] args) {
 		Robot robot = new Robot();
 		robot.forward(100, 50, 99);
-		Button.waitForAnyPress(3000);
+		robot.pilot.stop();
 	}
 
 }
