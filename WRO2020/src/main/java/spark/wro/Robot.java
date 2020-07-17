@@ -12,6 +12,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.hardware.Keys;
+import lejos.utility.Delay;
 import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
@@ -45,53 +46,65 @@ public class Robot {
 
 	public DifferentialPilot pilot = null;
 
+	/**
+	 * totally something
+	 */
 	public Robot() {
 		String msg = "Cannot init port %s.";
 		try {
 			motorA = new EV3MediumRegulatedMotor(MotorPort.A);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.A.getName()));
 		}
 		try {
 			motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.B.getName()));
 		}
 		try {
 			motorC = new EV3LargeRegulatedMotor(MotorPort.C);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.C.getName()));
 		}
 		try {
 			System.err.println(String.format(msg, MotorPort.D.getName()));
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			sensor1 = new EV3ColorSensor(SensorPort.S1);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, SensorPort.S1.getName()));
 		}
 		try {
 			sensor2 = new EV3ColorSensor(SensorPort.S2);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, SensorPort.S2.getName()));
 		}
 		try {
 			sensor3 = new EV3ColorSensor(SensorPort.S3);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, SensorPort.S3.getName()));
 		}
 		try {
 			sensor4 = new EV3ColorSensor(SensorPort.S4);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println(String.format(msg, SensorPort.S4.getName()));
 		}
 		
 		try {
 			ev3Buttons = new Button();
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			System.err.println("Cannot init button.");
 		}
 
@@ -99,28 +112,32 @@ public class Robot {
 			if (spColor1 != null) {
 				spColor1 = sensor2.getColorIDMode();
 			}
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		try {
 			if (spRed2 != null) {
 				spRed2 = sensor2.getRedMode();
 			}
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		try {
 			if (spRed3 != null) {
 				spRed3 = sensor3.getRedMode();
 			}
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		try {
 			if (spColor4 != null) {
 				spColor4 = sensor4.getColorIDMode();
 			}
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -171,10 +188,9 @@ public class Robot {
 	}
 
 	/**
-	 * moves the robot backwards
-	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
-	 * @param speed | between one and 700
-	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
+	 * @param cm
+	 * @param speed
+	 * @param stopLine
 	 */
 	public void backward(float cm, int speed, int stopLine) {
 
@@ -381,7 +397,25 @@ public class Robot {
 		float maxBlackValue = 100;
 
 		// Calibrate
-
+		pilot.forward();
+		
+		//Read Values
+		int i = 1000;
+		float colorValue;
+		while(i > 0) {
+			i -= 1;
+			colorValue = readReflect(2);
+			if(colorValue > maxWhiteValue) {
+				maxWhiteValue = colorValue;
+			}
+			if(colorValue < maxBlackValue) {
+				maxBlackValue = colorValue;
+			}
+            Delay.msDelay(10);
+		}
+		
+		//Stop Pilot
+		pilot.stop();
 		// Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
