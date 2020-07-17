@@ -11,44 +11,120 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.navigation.DifferentialPilot;
-import lejos.utility.Delay;
 import lejos.hardware.Keys;
 import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
 	private final static Logger LOG = null;
 
-	EV3MediumRegulatedMotor motorA = new EV3MediumRegulatedMotor(MotorPort.A);
-	EV3LargeRegulatedMotor motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-	EV3LargeRegulatedMotor motorC = new EV3LargeRegulatedMotor(MotorPort.C);
-	EV3MediumRegulatedMotor motorD = new EV3MediumRegulatedMotor(MotorPort.D);
+	EV3MediumRegulatedMotor motorA = null;
+	EV3LargeRegulatedMotor motorB = null;
+	EV3LargeRegulatedMotor motorC = null;
+	EV3MediumRegulatedMotor motorD = null;
 
-	EV3ColorSensor sensor1 = new EV3ColorSensor(SensorPort.S1);
-	EV3ColorSensor sensor2 = new EV3ColorSensor(SensorPort.S2);
-	EV3ColorSensor sensor3 = new EV3ColorSensor(SensorPort.S3);
-	EV3ColorSensor sensor4 = new EV3ColorSensor(SensorPort.S4);
+	EV3ColorSensor sensor1 = null;
+	EV3ColorSensor sensor2 = null;
+	EV3ColorSensor sensor3 = null;
+	EV3ColorSensor sensor4 = null;
 
-	Button ev3Buttons = new Button();
+	Button ev3Buttons = null;
+
+	SampleProvider spColor1 = null;
+	SampleProvider spRed2 = null;
+	SampleProvider spRed3 = null;
+	SampleProvider spColor4 = null;
 
 	float maxWhite = 0;
 	float maxBlack = 100;
 
-	SampleProvider ReadIntensity2 = sensor2.getRedMode();
-	SampleProvider ReadIntensity3 = sensor3.getRedMode();
-	SampleProvider ReadIntensity4 = sensor4.getRedMode();
-	SampleProvider ReadColor2 = sensor2.getColorIDMode();
-	SampleProvider ReadColor3 = sensor3.getColorIDMode();
-	SampleProvider ReadColor4 = sensor4.getColorIDMode();
-
 	float wheelSize = 8.16f;
 	float trackWidth = 9.5f;
 	double DegreesPerCM = (1 / (Math.PI * wheelSize)) * 360;
+	double CMPerDegree = ((Math.PI * trackWidth) / 360);
 	boolean reversed = true;
 
-	DifferentialPilot pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
+	public DifferentialPilot pilot = null;
 
 	public Robot() {
+		String msg = "Cannot init port %s.";
+		try {
+			motorA = new EV3MediumRegulatedMotor(MotorPort.A);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, MotorPort.A.getName()));
+		}
+		try {
+			motorB = new EV3LargeRegulatedMotor(MotorPort.B);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, MotorPort.B.getName()));
+		}
+		try {
+			motorC = new EV3LargeRegulatedMotor(MotorPort.C);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, MotorPort.C.getName()));
+		}
+		try {
+			System.err.println(String.format(msg, MotorPort.D.getName()));
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
 
+		try {
+			sensor1 = new EV3ColorSensor(SensorPort.S1);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, SensorPort.S1.getName()));
+		}
+		try {
+			sensor2 = new EV3ColorSensor(SensorPort.S2);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, SensorPort.S2.getName()));
+		}
+		try {
+			sensor3 = new EV3ColorSensor(SensorPort.S3);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, SensorPort.S3.getName()));
+		}
+		try {
+			sensor4 = new EV3ColorSensor(SensorPort.S4);
+		} catch (RuntimeException e) {
+			System.err.println(String.format(msg, SensorPort.S4.getName()));
+		}
+		
+		try {
+			ev3Buttons = new Button();
+		} catch (RuntimeException e) {
+			System.err.println("Cannot init button.");
+		}
+
+		try {
+			if (spColor1 != null) {
+				spColor1 = sensor2.getColorIDMode();
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (spRed2 != null) {
+				spRed2 = sensor2.getRedMode();
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (spRed3 != null) {
+				spRed3 = sensor3.getRedMode();
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (spColor4 != null) {
+				spColor4 = sensor4.getColorIDMode();
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+
+		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
 	}
 
 	/**
@@ -89,6 +165,7 @@ public class Robot {
 			}
 		} else {
 			pilot.travel(cm);
+			pilot.stop();
 		}
 
 	}
@@ -98,19 +175,6 @@ public class Robot {
 	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
 	 * @param speed | between one and 700
 	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
-	 */
-	public void forward(int speed) {
-		//Set the speed
-		pilot.setLinearSpeed(speed);
-		
-		//Move Forward
-		pilot.forward();
-
-	}
-	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
 	 */
 	public void backward(float cm, int speed, int stopLine) {
 
@@ -144,17 +208,18 @@ public class Robot {
 			}
 		} else {
 			pilot.travel(cm);
+			pilot.stop();
 		}
 
 	}
 
 	/**
 	 * turns the robot
-	 * @param type | -1 means left wheel, 0 means both, 1 means right wheel
+	 * @param type -1 means left wheel, 0 means both, 1 means right wheel
 	 * @param degree | positive is right turn, negative is left turn
 	 * @param stopLine | -1 means left sensor, 0 means don't search for line, 1 means right sensor
 	 */
-	public void turn(int type, int degree, int stopLine) {
+	public void turn(int type, int degrees, int stopLine) {
 
 		pilot.setLinearSpeed(100);
 		motorB.resetTachoCount();
@@ -163,7 +228,7 @@ public class Robot {
 		//determine turn type
 		switch (type) {
 		case -1: {
-			while (Math.abs(motorB.getTachoCount())) {
+			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {
 				
 			}
 		}
@@ -250,25 +315,20 @@ public class Robot {
 	 */
 	public int readReflect(int port) {
 		switch (port) {
-		case 1: {
+		case 1:
+		case 4: {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 		case 2: {
-			int samples = ReadIntensity2.sampleSize();
+			int samples = spRed2.sampleSize();
 			float[] sample = new float[samples];
-			ReadIntensity2.fetchSample(sample, 0);
+			spRed2.fetchSample(sample, 0);
 			return (int) sample[0];
 		}
 		case 3: {
-			int samples = ReadIntensity3.sampleSize();
+			int samples = spRed3.sampleSize();
 			float[] sample = new float[samples];
-			ReadIntensity3.fetchSample(sample, 0);
-			return (int) sample[0];
-		}
-		case 4: {
-			int samples = ReadIntensity4.sampleSize();
-			float[] sample = new float[samples];
-			ReadIntensity4.fetchSample(sample, 0);
+			spRed3.fetchSample(sample, 0);
 			return (int) sample[0];
 		}
 		default:
@@ -282,25 +342,20 @@ public class Robot {
 	 */
 	public float readColor(int port) {
 		switch (port) {
-		case 1: {
+		case 1:
+		case 4: {
 			throw new IllegalArgumentException("Unexpected value: " + port);
 		}
 		case 2: {
-			int samples = ReadColor2.sampleSize();
+			int samples = spColor1.sampleSize();
 			float[] sample = new float[samples];
-			ReadColor2.fetchSample(sample, 0);
+			spColor1.fetchSample(sample, 0);
 			return sample[0];
 		}
 		case 3: {
-			int samples = ReadColor3.sampleSize();
+			int samples = spColor4.sampleSize();
 			float[] sample = new float[samples];
-			ReadColor3.fetchSample(sample, 0);
-			return sample[0];
-		}
-		case 4: {
-			int samples = ReadColor4.sampleSize();
-			float[] sample = new float[samples];
-			ReadColor4.fetchSample(sample, 0);
+			spColor4.fetchSample(sample, 0);
 			return sample[0];
 		}
 		default:
@@ -324,29 +379,10 @@ public class Robot {
 		// Max White and Black Values
 		float maxWhiteValue = 0;
 		float maxBlackValue = 100;
-		
-		//Calibrate
-		pilot.forward();
-		
-		//Read Values
-		int i = 1000;
-		float colorValue;
-		while(i > 0) {
-			i -= 1;
-			colorValue = readReflect(2);
-			if(colorValue > maxWhiteValue) {
-				maxWhiteValue = colorValue;
-			}
-			if(colorValue < maxBlackValue) {
-				maxBlackValue = colorValue;
-			}
-            Delay.msDelay(10);
-		}
-		
-		//Stop Pilot
-		pilot.stop();
-		
-		//Set Values
+
+		// Calibrate
+
+		// Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 		
