@@ -188,9 +188,10 @@ public class Robot {
 	}
 
 	/**
-	 * @param cm
-	 * @param speed
-	 * @param stopLine
+	 * moves robot backwards
+	 * @param cm | must be a positive measurement in centimeters, how much you want to travel backwards
+	 * @param speed | between one and 700
+	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 */
 	public void backward(float cm, int speed, int stopLine) {
 
@@ -322,9 +323,10 @@ public class Robot {
 	}
 
 	/**
-	 * @param motor
-	 * @param degree
-	 * @param angularSpeed
+	 * Turns a motor
+	 * @param motor | One of the ports
+	 * @param degree | How many degrees you want to turn the motor
+	 * @param angularSpeed | How fast you want to turn the morot
 	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		// TODO:M
