@@ -15,7 +15,7 @@ import lejos.hardware.Keys;
 import lejos.utility.Delay;
 import lejos.hardware.lcd.CommonLCD;
 
-public class Rbot {
+public class Robot {
 	private final static Logger LOG = null;
 
 	EV3MediumRegulatedMotor motorA = null;
@@ -49,7 +49,7 @@ public class Rbot {
 	/**
 	 * totally something
 	 */
-	public Rbot() {
+	public Robot() {
 		String msg = "Cannot init port %s.";
 		try {
 			motorA = new EV3MediumRegulatedMotor(MotorPort.A);

@@ -12,7 +12,7 @@ public class run2020 {
         System.out.println("Checking Battery");
         System.out.println("Votage: " + Battery.getInstance().getVoltage());
         
-        Rbot robot = new Rbot();
+        Robot robot = new Robot();
         
         robot.forward(50f, 450, 2147483647);
         robot.backward(50, 450, 2147483647);
