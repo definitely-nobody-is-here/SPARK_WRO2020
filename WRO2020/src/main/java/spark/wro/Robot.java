@@ -163,7 +163,9 @@ public class Robot {
 		//determine turn type
 		switch (type) {
 		case -1: {
-			while (Math.abs(motorB.getTachoCount()))
+			while (Math.abs(motorB.getTachoCount())) {
+				
+			}
 		}
 		case 0: {
 			
@@ -222,7 +224,7 @@ public class Robot {
 			integralError = integralError * integralDecay + colorValue - (maxWhite + maxBlack) / 2;
 
 			// Drive Robot
-			arc(error, 0, 100, stopLine);
+			steer(error, 100, 0);
 		}
 	}
 
@@ -347,6 +349,9 @@ public class Robot {
 		//Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
+		
+		//Print Values
+		
 	}
 
 	/**
@@ -362,8 +367,17 @@ public class Robot {
 	 * @param speed
 	 * @param stopLine
 	 */
-	public void arc(float steering, float cm, int speed, int stopLine) {
+	public void steer(float steering, int speed, int stopLine) {
 		// TODO:M
+		if(steering > 0) {
+			pilot.arc(steering, 10, true);
+		}
+		if(steering < 0) {
+			pilot.arc(steering, 10, true);
+		}
+		if(steering == 0) {
+			pilot.forward();
+		}
 	}
 
 	/**
