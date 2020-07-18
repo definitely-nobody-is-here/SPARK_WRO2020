@@ -5,7 +5,7 @@ import ev3dev.sensors.Button;
 import lejos.utility.Delay;
 import spark.wro.Robot;
 
-public class Test {
+public class Maitian_Tset {
 
 	public static void main(String[] args) {
         System.out.println("Checking Battery");
@@ -13,13 +13,9 @@ public class Test {
         
         Robot robot = new Robot(false);
         
-        Delay.msDelay(1000000000);
-        
         
         robot.init();
-        robot.forward(50, 50, 2147483647);
-        Delay.msDelay(500);
-        robot.backward(50, 50, 2147483647);
+	    robot.followLine(1000, 0, 2, 0);
 	}
 
 }
