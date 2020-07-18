@@ -14,6 +14,7 @@ public class run2020 {
         
         Robot robot = new Robot();
         
+        robot.init();
         robot.forward(50, 50, 2147483647);
         Delay.msDelay(500);
         robot.backward(50, 50, 2147483647);

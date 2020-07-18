@@ -289,15 +289,21 @@ public class Robot {
 
 			// Color Sensor Values
 			float colorValue = 0;
-			if(port2 != 0) {
+			if(port2 != 0 && port1 != 0) {
 				float colorL = readReflect(2);
 				float colorR = readReflect(3);
 				colorValue = colorL - colorR;
 			}
-			else {
-
-				float colorL = readReflect(port1);
+			if(port2 != 0 && port1 == 0) {
+				float colorR = readReflect(3);
+				colorValue = colorR - (maxWhite + maxBlack) / 2;
+			}
+			if(port2 == 0 && port1 != 0) {
+				float colorL = readReflect(2);
 				colorValue = colorL - (maxWhite + maxBlack) / 2;
+			}
+			else {
+				return;
 			}
 
 			// Calculate errors
