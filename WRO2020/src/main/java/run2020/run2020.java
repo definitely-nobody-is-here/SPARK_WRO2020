@@ -8,16 +8,6 @@ import spark.wro.*;
 public class run2020 {
 
 	public static void main(final String[] args) {
-		
-        System.out.println("Checking Battery");
-        System.out.println("Votage: " + Battery.getInstance().getVoltage());
-        
-        Robot robot = new Robot();
-        
-        robot.init();
-        robot.forward(50, 50, 2147483647);
-        Delay.msDelay(500);
-        robot.backward(50, 50, 2147483647);
 	}
 
 }
