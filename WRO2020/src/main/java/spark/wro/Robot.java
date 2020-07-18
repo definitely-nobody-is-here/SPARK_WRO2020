@@ -16,7 +16,7 @@ import lejos.utility.Delay;
 import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
-	private final static Logger LOG = null;
+	private final static Logger LOG = org.slf4j.LoggerFactory.getLogger(Robot.class);
 
 	EV3MediumRegulatedMotor motorA = null;
 	EV3LargeRegulatedMotor motorB = null;
@@ -306,41 +306,52 @@ public class Robot {
 			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
 
 			// Color Sensor Values
-			float colorValue = 0;
+			float currentError = 0;
 			if(port2 != 0 && port1 != 0) {
 				float colorL = readReflect(2);
 				float colorR = readReflect(3);
-				colorValue = colorL - colorR;
+				currentError = colorL - colorR;
 			}
 			if(port2 != 0 && port1 == 0) {
 				float colorR = readReflect(3);
-				colorValue = colorR - (maxWhite + maxBlack) / 2;
+				currentError = colorR - (maxWhite + maxBlack) / 2;
 			}
 			if(port2 == 0 && port1 != 0) {
 				float colorL = readReflect(2);
-				colorValue = colorL - (maxWhite + maxBlack) / 2;
+				currentError = colorL - (maxWhite + maxBlack) / 2;
 			}
 			else {
 				return;
 			}
 
+			// Change integralError
+			integralError = integralError * integralDecay + currentError;
+
 			// Calculate errors
-			float errorP = colorValue;
+			float errorP = currentError;
 			float errorI = integralError;
-			float errorD = pastError - colorValue;
+			float errorD = currentError - pastError;
+
+			// Make pastError error
+			pastError = currentError;
 
 			// Calculate Total Error
 			error = kP * errorP + kI * errorI + kD * errorD;
 
-			// Make pastError error
-			pastError = colorValue;
-
-			// Change integralError
-			integralError = integralError * integralDecay + colorValue;
-
 			// Drive Robot
-			steer(error, 100, 0, true);
+			if(error < 0) {
+				motorB.setSpeed(100 - Math.round(error));
+				motorC.setSpeed(100);
+			}
+			else {
+				motorB.setSpeed(100);
+				motorC.setSpeed(100 - Math.round(error));
+			}
+			motorB.forward();
+			motorC.forward();
 		}
+		motorB.stop();
+		motorC.stop();
 	}
 
 	/**
@@ -432,7 +443,7 @@ public class Robot {
 		float maxBlackValue = 100;
 
 		// Calibrate
-		pilot.setLinearSpeed((double) 40);
+		pilot.setLinearSpeed(20);
 		pilot.forward();
 		
 		//Read Values
@@ -447,7 +458,11 @@ public class Robot {
 			if(colorValue < maxBlackValue) {
 				maxBlackValue = colorValue;
 			}
-            Delay.msDelay(10);
+            Delay.msDelay(1);
+    		System.out.println(maxWhiteValue);
+    		System.out.println(maxBlackValue);
+    		LOG.info("White: " + maxWhiteValue);
+    		//LOG.info("Black: " + maxBlackValue);
 		}
 		
 		//Stop Pilot
@@ -475,7 +490,7 @@ public class Robot {
 	 */
 	public void steer(float steering, int speed, int stopLine, boolean immediateReturn) {
 		// TODO:M
-		pilot.arc(steering, 10, immediateReturn);
+		pilot.arc(steering, 0.1, immediateReturn);
 	}
 
 	/**
