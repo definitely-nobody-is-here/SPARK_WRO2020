@@ -459,9 +459,11 @@ public class Robot {
 				maxBlackValue = colorValue;
 			}
             Delay.msDelay(1);
+    		System.out.println(maxWhiteValue);
+    		System.out.println(maxBlackValue);
+    		LOG.info("White: " + maxWhiteValue);
+    		LOG.info("Black: " + maxBlackValue);
 		}
-		System.out.println(maxWhiteValue);
-		System.out.println(maxBlackValue);
 		
 		//Stop Pilot
 		pilot.stop();

@@ -5,7 +5,7 @@ import lejos.robotics.SampleProvider;
 public final class ColorSensor extends ModularIO {
 
 	public ColorSensor(double wheelDiameter, double wheelDistance, boolean reversed) {
-		super(wheelDiameter, wheelDistance, reversed);
+		//super(wheelDiameter, wheelDistance, reversed);
 		// TODO Auto-generated constructor stub
 	}
 
