@@ -128,7 +128,7 @@ public class Robot {
 			e.printStackTrace();
 		}
 
-		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
+		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC, true);
 	}
 
 	/**
@@ -414,6 +414,7 @@ public class Robot {
 		float maxBlackValue = 100;
 
 		// Calibrate
+		pilot.setTravelSpeed((double) 40);
 		pilot.forward();
 		
 		//Read Values

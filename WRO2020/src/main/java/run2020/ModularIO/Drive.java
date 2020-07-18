@@ -1,7 +1,12 @@
 package run2020.ModularIO;
 
 public final class Drive extends ModularIO {
-	
+
+	public Drive(double wheelDiameter, double wheelDistance, boolean reversed) {
+		super(wheelDiameter, wheelDistance, reversed);
+		// TODO Auto-generated constructor stub
+	}
+
 	private void CheckPowerLimits(int power) {
 		
 		if (Math.abs(power) > 700) {
