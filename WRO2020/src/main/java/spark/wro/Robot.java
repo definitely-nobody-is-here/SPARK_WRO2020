@@ -47,7 +47,7 @@ public class Robot {
 	public DifferentialPilot pilot = null;
 
 	/**
-	 * totally something
+	 * Constructor for Robot
 	 */
 	public Robot() {
 		String msg = "Cannot init port %s.";
@@ -147,23 +147,21 @@ public class Robot {
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.forward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
-				// do nothing
 			}
 			switch (stopLine) {
 			case -1: {
 				while (readReflect(2) > 20) {
-
 				}
 			}
 			case 0: {
 				while (readReflect(2) > 20 && readReflect(3) > 20) {
-
 				}
 			}
 			case 1: {
 				while (readReflect(3) > 20) {
-
 				}
+			}
+			default: {
 			}
 			pilot.stop();
 			}
@@ -190,23 +188,21 @@ public class Robot {
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.backward();
 			while ((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2 < (cm * DegreesPerCM)) {
-				//do nothing
 			}
 			switch (stopLine) {
 			case -1: {
 				while (readReflect(2) > 20) {
-
 				}
 			}
 			case 0: {
 				while (readReflect(2) > 20 && readReflect(3) > 20) {
-
 				}
 			}
 			case 1: {
 				while (readReflect(3) > 20) {
-
 				}
+			}
+			default: {				
 			}
 				pilot.stop();
 			}
@@ -233,8 +229,23 @@ public class Robot {
 		switch (type) {
 		case -1: {
 			motorB.forward();
-			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {
-				
+			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {				
+			}
+			switch (stopLine) {
+			case -1: {
+				while (readReflect(2) > 20) {
+				}
+			}
+			case 0: {
+				while (readReflect(2) > 20 && readReflect(3) > 20) {
+				}
+			}
+			case 1: {
+				while (readReflect(3) > 20) {
+				}
+			}
+			default: {				
+			}
 			}
 		}
 		case 0: {
@@ -279,8 +290,8 @@ public class Robot {
 			// Color Sensor Values
 			float colorValue = 0;
 			if(port2 != 0) {
-				float colorL = readReflect(port1);
-				float colorR = readReflect(port2);
+				float colorL = readReflect(2);
+				float colorR = readReflect(3);
 				colorValue = colorL - colorR;
 			}
 			else {
