@@ -49,7 +49,7 @@ public class Robot {
 	/**
 	 * Constructor for Robot
 	 */
-	public Robot() {
+	public Robot(boolean reversed) {
 		String msg = "Cannot init port %s.";
 		try {
 			motorA = new EV3MediumRegulatedMotor(MotorPort.A);
@@ -128,7 +128,7 @@ public class Robot {
 			e.printStackTrace();
 		}
 
-		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC, true);
+		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC, reversed);
 	}
 
 	/**
