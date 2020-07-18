@@ -414,7 +414,7 @@ public class Robot {
 		float maxBlackValue = 100;
 
 		// Calibrate
-		pilot.setLinearSpeed40);
+		pilot.setLinearSpeed(40);
 		pilot.forward();
 		
 		//Read Values
