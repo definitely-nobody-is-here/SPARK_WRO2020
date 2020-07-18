@@ -39,7 +39,7 @@ public class ModularIO {
      double CMPerDegree;
      int reverse;
     
-    public final void Config(double wheelDiameter, double wheelDistance, boolean reversed) {
+    public ModularIO(double wheelDiameter, double wheelDistance, boolean reversed) {
    
     	driveB.brake();
     	driveC.brake();
