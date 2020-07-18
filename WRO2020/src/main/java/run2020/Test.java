@@ -13,6 +13,14 @@ public class Test {
         
         Robot robot = new Robot(false);
         
+        if (2147483647 != -1 && 2147483647 != 0 && 2147483647 != 1) {
+        	Delay.msDelay(1000000000);
+        }
+        else {
+        	//dead code?
+        }
+        
+        
         robot.init();
         robot.forward(50, 50, 2147483647);
         Delay.msDelay(500);
