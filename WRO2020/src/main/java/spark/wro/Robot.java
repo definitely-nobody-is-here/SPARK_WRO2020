@@ -129,7 +129,6 @@ public class Robot {
 		}
 
 		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
-		followLine(1000000,100,0,2,0);
 	}
 
 	/**
@@ -262,12 +261,11 @@ public class Robot {
 	/**
 	 * follows a line in front of the robot with sensors
 	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
-	 * @param speed | between one and 700
 	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 * @param port1 | Left sensor port
 	 * @param port2 | Right sensor port, 0 means only one sensor
 	 */
-	public void followLine(float cm, int speed, int stopLine, int port1, int port2) {
+	public void followLine(float cm, int stopLine) {
 		//          why is this a one-sensor thing?
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		//PID Settings
@@ -292,8 +290,8 @@ public class Robot {
 			// Color Sensor Values
 			float colorValue = 0;
 			if(port2 != 0) {
-				float colorL = readReflect(port1);
-				float colorR = readReflect(port2);
+				float colorL = readReflect(2);
+				float colorR = readReflect(3);
 				colorValue = colorL - colorR;
 			}
 			else {
