@@ -249,7 +249,25 @@ public class Robot {
 			}
 		}
 		case 0: {
-			
+			motorB.forward();
+			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {				
+			}
+			switch (stopLine) {
+			case -1: {
+				while (readReflect(2) > 20) {
+				}
+			}
+			case 0: {
+				while (readReflect(2) > 20 && readReflect(3) > 20) {
+				}
+			}
+			case 1: {
+				while (readReflect(3) > 20) {
+				}
+			}
+			default: {				
+			}
+			}
 		}
 		case 1: {
 			

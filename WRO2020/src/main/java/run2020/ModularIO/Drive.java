@@ -1,8 +1,6 @@
 package run2020.ModularIO;
 
 public final class Drive extends ModularIO {
-	
-	}
 
 	private void CheckPowerLimits(int power) {
 		
