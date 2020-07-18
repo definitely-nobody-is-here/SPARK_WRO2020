@@ -1,8 +1,6 @@
 package run2020;
 
 import ev3dev.sensors.Battery;
-import ev3dev.sensors.Button;
-import lejos.utility.Delay;
 import spark.wro.Robot;
 
 public class Maitian_Tset {
