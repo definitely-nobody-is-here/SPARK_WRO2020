@@ -2,9 +2,6 @@ package run2020.ModularIO;
 
 public final class Drive extends ModularIO {
 	
-	public Drive(double wheelDiameter, double wheelDistance, boolean reversed) {
-		super(wheelDiameter, wheelDistance, reversed);
-	}
 
 	private void CheckPowerLimits(int power) {
 		
