@@ -13,7 +13,13 @@ public class Test {
         
         Robot robot = new Robot(false);
         
-        Delay.msDelay(1000000000);
+        if (2147483647 != -1 && 2147483647 != 0 && 2147483647 != 1) {
+        	Delay.msDelay(1000000000);
+        }
+        else {
+        	//dead code?
+        	System.out.println("2147483647 is not -1, 0, of 1, and DifferentialPilot is broken!!!")
+        }
         
         
         robot.init();
