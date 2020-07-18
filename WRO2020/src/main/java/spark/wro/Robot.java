@@ -53,58 +53,49 @@ public class Robot {
 		String msg = "Cannot init port %s.";
 		try {
 			motorA = new EV3MediumRegulatedMotor(MotorPort.A);
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.A.getName()));
 		}
 		try {
 			motorB = new EV3LargeRegulatedMotor(MotorPort.B);
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.B.getName()));
 		}
 		try {
 			motorC = new EV3LargeRegulatedMotor(MotorPort.C);
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			System.err.println(String.format(msg, MotorPort.C.getName()));
 		}
 		try {
 			System.err.println(String.format(msg, MotorPort.D.getName()));
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			sensor1 = new EV3ColorSensor(SensorPort.S1);
-		}
-		catch (RuntimeException e) {
-			System.err.println(String.format(msg, SensorPort.S1.getName()));
+		} catch (RuntimeException e) {
+			//System.err.println(String.format(msg, SensorPort.S1.getName()));
 		}
 		try {
 			sensor2 = new EV3ColorSensor(SensorPort.S2);
-		}
-		catch (RuntimeException e) {
-			System.err.println(String.format(msg, SensorPort.S2.getName()));
+		} catch (RuntimeException e) {
+			//System.err.println(String.format(msg, SensorPort.S2.getName()));
 		}
 		try {
 			sensor3 = new EV3ColorSensor(SensorPort.S3);
-		}
-		catch (RuntimeException e) {
-			System.err.println(String.format(msg, SensorPort.S3.getName()));
+		} catch (RuntimeException e) {
+			//System.err.println(String.format(msg, SensorPort.S3.getName()));
 		}
 		try {
 			sensor4 = new EV3ColorSensor(SensorPort.S4);
-		}
-		catch (RuntimeException e) {
-			System.err.println(String.format(msg, SensorPort.S4.getName()));
+		} catch (RuntimeException e) {
+			//System.err.println(String.format(msg, SensorPort.S4.getName()));
 		}
 		
 		try {
 			ev3Buttons = new Button();
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			System.err.println("Cannot init button.");
 		}
 
@@ -112,36 +103,33 @@ public class Robot {
 			if (spColor1 != null) {
 				spColor1 = sensor2.getColorIDMode();
 			}
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (RuntimeException e) {
+			//e.printStackTrace();
 		}
 		try {
 			if (spRed2 != null) {
 				spRed2 = sensor2.getRedMode();
 			}
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		try {
 			if (spRed3 != null) {
 				spRed3 = sensor3.getRedMode();
 			}
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (RuntimeException e) {
+			//e.printStackTrace();
 		}
 		try {
 			if (spColor4 != null) {
 				spColor4 = sensor4.getColorIDMode();
 			}
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (RuntimeException e) {
+			//e.printStackTrace();
 		}
 
 		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
+		followLine(1000000,100,0,2,0);
 	}
 
 	/**
