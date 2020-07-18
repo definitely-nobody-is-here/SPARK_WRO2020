@@ -16,7 +16,7 @@ import lejos.utility.Delay;
 import lejos.hardware.lcd.CommonLCD;
 
 public class Robot {
-	private final static Logger LOG = null;
+	private final static Logger LOG = org.slf4j.LoggerFactory.getLogger(Robot.class);
 
 	EV3MediumRegulatedMotor motorA = null;
 	EV3LargeRegulatedMotor motorB = null;
@@ -462,7 +462,7 @@ public class Robot {
     		System.out.println(maxWhiteValue);
     		System.out.println(maxBlackValue);
     		LOG.info("White: " + maxWhiteValue);
-    		LOG.info("Black: " + maxBlackValue);
+    		//LOG.info("Black: " + maxBlackValue);
 		}
 		
 		//Stop Pilot

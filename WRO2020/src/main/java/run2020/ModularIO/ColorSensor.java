@@ -1,6 +1,6 @@
 package run2020.ModularIO;
 
-import lejos.robotics.SampleProvider;
+//import lejos.robotics.SampleProvider;
 
 public final class ColorSensor extends ModularIO {
 

@@ -22,8 +22,6 @@ public final class Drive extends ModularIO {
 		float Integral = 0;
 		float Derivative = 0;
 		float Correction = 0;
-		float LPower = powerL;
-		float RPower = powerR;
 		
 		float p = 0.5f;
 		float i = 0.001f;
