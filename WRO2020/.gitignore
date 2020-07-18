@@ -10,8 +10,7 @@ build/
 # Ignore Javac build output directory
 bin/
 
-# Ignore Eclipse .settings directory
+# Ignore Eclipse .settings directory, and .classpath, .project files
 .settings/
-
-# Ignore Eclipse .classpath file
 .classpath
+.project
