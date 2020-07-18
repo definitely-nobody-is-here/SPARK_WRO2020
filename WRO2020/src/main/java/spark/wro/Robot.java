@@ -67,30 +67,30 @@ public class Robot {
 			System.err.println(String.format(msg, MotorPort.C.getName()));
 		}
 		try {
-			System.err.println(String.format(msg, MotorPort.D.getName()));
+			motorD = new EV3MediumRegulatedMotor(MotorPort.D);
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			System.err.println(String.format(msg, MotorPort.D.getName()));
 		}
 
 		try {
 			sensor1 = new EV3ColorSensor(SensorPort.S1);
 		} catch (RuntimeException e) {
-			//System.err.println(String.format(msg, SensorPort.S1.getName()));
+			System.err.println(String.format(msg, SensorPort.S1.getName()));
 		}
 		try {
 			sensor2 = new EV3ColorSensor(SensorPort.S2);
 		} catch (RuntimeException e) {
-			//System.err.println(String.format(msg, SensorPort.S2.getName()));
+			System.err.println(String.format(msg, SensorPort.S2.getName()));
 		}
 		try {
 			sensor3 = new EV3ColorSensor(SensorPort.S3);
 		} catch (RuntimeException e) {
-			//System.err.println(String.format(msg, SensorPort.S3.getName()));
+			System.err.println(String.format(msg, SensorPort.S3.getName()));
 		}
 		try {
 			sensor4 = new EV3ColorSensor(SensorPort.S4);
 		} catch (RuntimeException e) {
-			//System.err.println(String.format(msg, SensorPort.S4.getName()));
+			System.err.println(String.format(msg, SensorPort.S4.getName()));
 		}
 		
 		try {
@@ -100,36 +100,35 @@ public class Robot {
 		}
 
 		try {
-			if (spColor1 != null) {
-				spColor1 = sensor2.getColorIDMode();
+			if (sensor1 != null) {
+				spColor1 = sensor1.getColorIDMode();
 			}
 		} catch (RuntimeException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		try {
-			if (spRed2 != null) {
+			if (sensor2 != null) {
 				spRed2 = sensor2.getRedMode();
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		try {
-			if (spRed3 != null) {
+			if (sensor3 != null) {
 				spRed3 = sensor3.getRedMode();
 			}
 		} catch (RuntimeException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		try {
-			if (spColor4 != null) {
+			if (sensor4 != null) {
 				spColor4 = sensor4.getColorIDMode();
 			}
 		} catch (RuntimeException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		pilot = new DifferentialPilot(wheelSize, trackWidth, motorB, motorC);
-		followLine(1000000,100,0,2,0);
 	}
 
 	/**
@@ -251,12 +250,11 @@ public class Robot {
 	/**
 	 * follows a line in front of the robot with sensors
 	 * @param cm | must be a positive measurement in centimeters, how much you want to travel
-	 * @param speed | between one and 700
 	 * @param stopLine | -1 means search with left sensor, 0 means search with both, 1 means search with right sensor. Input any other value to not search for line.
 	 * @param port1 | Left sensor port
 	 * @param port2 | Right sensor port, 0 means only one sensor
 	 */
-	public void followLine(float cm, int speed, int stopLine, int port1, int port2) {
+	public void followLine(float cm, int stopLine, int port1, int port2) {
 		//          why is this a one-sensor thing?
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		//PID Settings
@@ -274,7 +272,7 @@ public class Robot {
 		float integralError = 0;
 
 		// Loop
-		while (wheelValue < cm) {
+		while (wheelValue < (cm * DegreesPerCM)) {
 			// Update Tacho Count
 			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
 

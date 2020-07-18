@@ -14,6 +14,7 @@ public class run2020 {
         
         Robot robot = new Robot();
         
+        robot.followLine(1000000, 0, 2, 0);
         robot.forward(50f, 450, 2147483647);
         robot.backward(50, 450, 2147483647);
         
