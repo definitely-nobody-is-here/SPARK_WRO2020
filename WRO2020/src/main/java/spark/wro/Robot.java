@@ -147,6 +147,7 @@ public class Robot {
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.forward();
 			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
+				
 			}
 			switch (stopLine) {
 			case -1: {
