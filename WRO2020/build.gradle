@@ -49,7 +49,7 @@ task fatJar {
 }
 
 shadowJar {
-    archiveFileName = "${rootProject.name}-${version}.${extension}"
+    archiveFileName = "${rootProject.name}.${extension}"
 }
 
 fatJar.dependsOn shadowJar
