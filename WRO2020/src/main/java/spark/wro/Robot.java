@@ -146,8 +146,12 @@ public class Robot {
 		//determine stopping at line
 		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
 			pilot.forward();
-			while ((motorB.getTachoCount() + motorC.getTachoCount()) / 2 < (cm * DegreesPerCM)) {
-			}
+			int techo = 0;
+			do {
+				techo = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
+				LOG.debug("techo = {}", techo);
+			} while (techo < (cm * DegreesPerCM));
+
 			switch (stopLine) {
 			case -1: {
 				while (readReflect(2) > 20) {
