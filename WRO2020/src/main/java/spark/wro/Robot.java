@@ -42,7 +42,7 @@ public class Robot {
 	float trackWidth = 9.5f;
 	double DegreesPerCM = (1 / (Math.PI * wheelSize)) * 360;
 	double CMPerDegree = ((Math.PI * trackWidth) / 360);
-	boolean reversed = true;
+	boolean reversed = false;
 
 	public DifferentialPilot pilot = null;
 
@@ -144,7 +144,7 @@ public class Robot {
 		motorC.resetTachoCount();
 		
 		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+		if (stopLine == -1 || stopLine == 0 || stopLine == 1){
 			pilot.forward();
 			int techo = 0;
 			do {
@@ -189,7 +189,7 @@ public class Robot {
 		motorC.resetTachoCount();
 		
 		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+		if (stopLine == -1 || stopLine == 0 || stopLine == 1){
 			pilot.backward();
 			while ((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2 < (cm * DegreesPerCM)) {
 			}
@@ -471,7 +471,7 @@ public class Robot {
     		LOG.info("White: " + maxWhiteValue);
     		LOG.info("Black: " + maxBlackValue);
 		}
-		
+		LOG.debug("exited loop");
 		//Stop Pilot
 		pilot.stop();
 		// Set Values
