@@ -290,10 +290,10 @@ public class Robot {
 	public void followLine(float cm, int stopLine, int port1, int port2) {
 		//          why is this a one-sensor thing?
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
-		//PID Settings
-		float kP = -1f;
-		float kI = -0.01f;
-		float kD = -1f;
+		// PID Settings
+		float kP = 1.5f;
+		float kI = 0.01f;
+		float kD = 1.5f;
 		float integralDecay = 1 / 2;
 
 		// Tacho Count
@@ -346,12 +346,12 @@ public class Robot {
 
 			// Drive Robot
 			if(error < 0) {
-				motorB.setSpeed(50 + Math.round(error));
-				motorC.setSpeed(50);
+				motorB.setSpeed(200 + Math.round(error));
+				motorC.setSpeed(200);
 			}
 			else {
-				motorB.setSpeed(50);
-				motorC.setSpeed(50 - Math.round(error));
+				motorB.setSpeed(200);
+				motorC.setSpeed(200 - Math.round(error));
 			}
 			LOG.info("error: " + error);
 			motorB.forward();
@@ -365,7 +365,7 @@ public class Robot {
 	 * Turns a motor
 	 * @param motor | One of the ports
 	 * @param degree | How many degrees you want to turn the motor
-	 * @param angularSpeed | How fast you want to turn the morot
+	 * @param angularSpeed | How fast you want to turn the motor
 	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		// TODO:M
@@ -453,8 +453,8 @@ public class Robot {
 		pilot.setLinearSpeed(10);
 		pilot.forward();
 		
-		//Read Values
-		int i = 30;
+		// Read Values
+		int i = 10;
 		float colorValue;
 		while(i > 0) {
 			i -= 1;
@@ -470,16 +470,16 @@ public class Robot {
     		System.out.println(maxBlackValue);
     		LOG.info("White: " + maxWhiteValue);
     		LOG.info("Black: " + maxBlackValue);
-    		LOG.debug("" + i);;
 		}
-		LOG.debug("exited loop");
-		//Stop Pilot
+		
+		// Stop Pilot
 		pilot.stop();
+		
 		// Set Values
 		maxWhite = maxWhiteValue;
 		maxBlack = maxBlackValue;
 		
-		//Print Values
+		// Print Values
 		
 	}
 
