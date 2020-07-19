@@ -467,6 +467,7 @@ public class Robot {
     		System.out.println(maxBlackValue);
     		LOG.info("White: " + maxWhiteValue);
     		LOG.info("Black: " + maxBlackValue);
+    		LOG.debug("" + i);;
 		}
 		LOG.debug("exited loop");
 		//Stop Pilot
