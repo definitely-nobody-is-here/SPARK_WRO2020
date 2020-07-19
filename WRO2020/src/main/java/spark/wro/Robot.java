@@ -2,7 +2,6 @@
 package spark.wro;
 
 import org.slf4j.Logger;
-
 import ev3dev.actuators.lego.motors.EV3LargeRegulatedMotor;
 import ev3dev.actuators.lego.motors.EV3MediumRegulatedMotor;
 import ev3dev.sensors.Button;
@@ -231,53 +230,165 @@ public class Robot {
 		
 		//determine turn type
 		switch (type) {
+		//left motor
 		case -1: {
-			motorB.forward();
-			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {				
-			}
-			switch (stopLine) {
-			case -1: {
-				while (readReflect(2) > 20) {
+			if (degrees > 0) {
+				motorB.forward();
+				while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * Math.abs(degrees)) {				
 				}
-			}
-			case 0: {
-				while (readReflect(2) > 20 && readReflect(3) > 20) {
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
 				}
-			}
-			case 1: {
-				while (readReflect(3) > 20) {
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
 				}
-			}
-			default: {				
-			}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
+			} else {
+				motorB.backward();
+				while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * Math.abs(degrees)) {
+				}
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
+				}
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
+				}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
 			}
 		}
+		//both motors
 		case 0: {
-			motorB.forward();
-			while (Math.abs(motorB.getTachoCount()) < (CMPerDegree / 2) * degrees) {				
-			}
-			switch (stopLine) {
-			case -1: {
-				while (readReflect(2) > 20) {
+			if (degrees > 0) {
+				motorB.forward();
+				motorC.backward();
+				while (((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2) < (CMPerDegree / 2) * Math.abs(degrees)) {				
 				}
-			}
-			case 0: {
-				while (readReflect(2) > 20 && readReflect(3) > 20) {
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
 				}
-			}
-			case 1: {
-				while (readReflect(3) > 20) {
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
 				}
-			}
-			default: {				
-			}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
+			} else {
+				motorB.backward();
+				motorC.forward();
+				while (((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2) < (CMPerDegree / 2) * Math.abs(degrees)) {				
+				}
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
+				}
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
+				}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
 			}
 		}
+		//right motor
 		case 1: {
-			
+			if (degrees > 0) {
+				motorC.forward();
+				while (Math.abs(motorC.getTachoCount()) < (CMPerDegree / 2) * Math.abs(degrees)) {				
+				}
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
+				}
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
+				}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
+			} else {
+				motorC.forward();
+				while (Math.abs(motorC.getTachoCount()) < (CMPerDegree / 2) * Math.abs(degrees)) {				
+				}
+				switch (stopLine) {
+				//detect line with sensor 2
+				case -1: {
+					while (readReflect(2) > 20) {
+					}
+				}
+				//detect line with both sensor
+				case 0: {
+					while (readReflect(2) > 20 && readReflect(3) > 20) {
+					}
+				}
+				//detect line with sensor 3
+				case 1: {
+					while (readReflect(3) > 20) {
+					}
+				}
+				//no stop at line
+				default: {				
+				}
+				}
+			}
 		}
-
-	}
+		}
 	}
 
 	/**
@@ -304,7 +415,7 @@ public class Robot {
 		float pastError = 0;
 		float integralError = 0;
 
-		// Loop
+		// Loop until distance is reached
 		while (wheelValue < (cm * DegreesPerCM)) {
 			// Update Tacho Count
 			wheelValue = (motorB.getTachoCount() + motorC.getTachoCount()) / 2;
@@ -369,13 +480,14 @@ public class Robot {
 	 */
 	public void turnMotor(int motor, float degree, int angularSpeed) {
 		// TODO:M
+		LOG.warn("Warning: Method ''turnMotor'' not yet implemented.");
 	}
 
 	/**
 	 * @param mode
 	 */
 	public void setMode(int mode) {
-
+		LOG.warn("Warning: Method ''setMode'' not yet implemented.");
 	}
 
 	/**
@@ -433,10 +545,9 @@ public class Robot {
 	}
 
 	/**
-	 * 
+	 * lol just run calibrateColorSensor
 	 */
 	public void init() {
-		// TODO:
 		// Calibrate Color Sensors
 		calibrateColorSensor();
 	}
@@ -488,6 +599,7 @@ public class Robot {
 	 */
 	public void getEV3() {
 		// TODO:M
+		LOG.warn("Warning: Method ''getEV3'' not yet implemented.");
 	}
 	
 	/**
@@ -506,13 +618,15 @@ public class Robot {
 	 */
 	public void reset() {
 		// TODO:none
+		LOG.warn("Warning: Method ''reset'' not yet implemented. (and will probably never be)");
 	}
 
 	/**
-	 * 
+	 * bruh
 	 */
 	public void align() {
 		// TODO:M
+		LOG.warn("Warning: Method ''align'' not yet implemented.");
 	}
 
 	/**
@@ -520,5 +634,6 @@ public class Robot {
 	 */
 	public void square() {
 		// TODO:M
+		LOG.warn("Warning: Method ''square'' not yet implemented.");
 	}
 }
