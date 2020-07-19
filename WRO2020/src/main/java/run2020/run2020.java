@@ -12,8 +12,7 @@ public class run2020 {
 	    System.out.println("Votage: " + Battery.getInstance().getVoltage());
 	    
 	    Robot robot = new Robot(true);
-	    
-	    robot.init();
+
 	    robot.followLine(1000, 0, 2, 0);
 	    robot.forward(50, 50, 2147483647);
 	    Delay.msDelay(500);
