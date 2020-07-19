@@ -144,7 +144,7 @@ public class Robot {
 		motorC.resetTachoCount();
 		
 		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+		if (stopLine == -1 || stopLine == 0 || stopLine == 1){
 			pilot.forward();
 			int techo = 0;
 			do {
@@ -189,7 +189,7 @@ public class Robot {
 		motorC.resetTachoCount();
 		
 		//determine stopping at line
-		if (stopLine != -1 && stopLine != 0 && stopLine != 1){
+		if (stopLine == -1 || stopLine == 0 || stopLine == 1){
 			pilot.backward();
 			while ((Math.abs(motorB.getTachoCount()) + Math.abs(motorC.getTachoCount())) / 2 < (cm * DegreesPerCM)) {
 			}
