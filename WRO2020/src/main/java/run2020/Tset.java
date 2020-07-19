@@ -13,7 +13,6 @@ public class Tset {
         
         Robot robot = new Robot(false);
 
-        robot.init();
         robot.forward(50, 50, 2147483647);
         Delay.msDelay(500);
         robot.backward(50, 50, 2147483647);
