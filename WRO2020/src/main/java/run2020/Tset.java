@@ -5,7 +5,7 @@ import ev3dev.sensors.Button;
 import lejos.utility.Delay;
 import spark.wro.Robot;
 
-public class Test {
+public class Tset {
 
 	public static void main(String[] args) {
         System.out.println("Checking Battery");
@@ -15,10 +15,10 @@ public class Test {
         
         if (2147483647 != -1 && 2147483647 != 0 && 2147483647 != 1) {
         	Delay.msDelay(1000000000);
-        }
-        else {
+        } else {
         	//dead code?
         	System.out.println("2147483647 is not -1, 0, of 1, and DifferentialPilot is broken!!!");
+        	Delay.nsDelay(1);
         }
         
         
