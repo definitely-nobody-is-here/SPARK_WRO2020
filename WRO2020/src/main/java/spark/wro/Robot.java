@@ -184,7 +184,7 @@ public class Robot {
 	 */
 	public void backward(float cm, int speed, int stopLine) {
 
-		pilot.setLinearSpeed(speed);
+		pilot.setLinearSpeed(Math.abs(speed));
 		motorB.resetTachoCount();
 		motorC.resetTachoCount();
 		
@@ -211,7 +211,7 @@ public class Robot {
 				pilot.stop();
 			}
 		} else {
-			pilot.travel(cm);
+			pilot.travel(-cm);
 			pilot.stop();
 		}
 
