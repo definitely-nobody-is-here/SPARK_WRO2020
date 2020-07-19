@@ -292,7 +292,7 @@ public class Robot {
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		// PID Settings
 		float kP = 1.5f;
-		float kI = 0.01f;
+		float kI = 0.001f;
 		float kD = 1.5f;
 		float integralDecay = 1 / 2;
 
@@ -304,6 +304,14 @@ public class Robot {
 		float pastError = 0;
 		float integralError = 0;
 
+		LOG.info("DegreesPerCM: " + DegreesPerCM);
+		LOG.info("wheelValue: " + wheelValue);
+		LOG.info("cm: " + cm);
+		if(port2 != 0 && port1 != 0) {
+			LOG.info("PORTS ARE NOT ZERO!!!!!");
+		}
+		LOG.info("port1: " + port1);
+		LOG.info("port2: " + port2);
 		// Loop
 		while (wheelValue < (cm * DegreesPerCM)) {
 			// Update Tacho Count
@@ -311,18 +319,18 @@ public class Robot {
 
 			// Color Sensor Values
 			float currentError = 0;
-			if(port2 != 0 && port1 != 0) {
+			if(port1 != 0 && port2 != 0) {
 				float colorL = readReflect(port1);
 				float colorR = readReflect(port2);
 				currentError = colorL - colorR;
 			}
-			if(port2 != 0 && port1 == 0) {
-				float colorR = readReflect(port2);
-				currentError = colorR - (maxWhite + maxBlack) / 2;
-			}
-			if(port2 == 0 && port1 != 0) {
+			else if(port1 != 0 && port2 == 0) {
 				float colorL = readReflect(port1);
 				currentError = colorL - (maxWhite + maxBlack) / 2;
+			}
+			else if(port1 == 0 && port2 != 0) {
+				float colorR = readReflect(port2);
+				currentError = (maxWhite + maxBlack) / 2 - colorR;
 			}
 			else {
 				return;
@@ -346,12 +354,12 @@ public class Robot {
 
 			// Drive Robot
 			if(error < 0) {
-				motorB.setSpeed(200 + Math.round(error));
-				motorC.setSpeed(200);
+				motorB.setSpeed(300 + Math.round(error));
+				motorC.setSpeed(300);
 			}
 			else {
-				motorB.setSpeed(200);
-				motorC.setSpeed(200 - Math.round(error));
+				motorB.setSpeed(300);
+				motorC.setSpeed(300 - Math.round(error));
 			}
 			LOG.info("error: " + error);
 			motorB.forward();

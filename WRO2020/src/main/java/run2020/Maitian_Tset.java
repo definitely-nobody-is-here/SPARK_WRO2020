@@ -19,7 +19,7 @@ public class Maitian_Tset {
         robot.init();
         LOG.info("Running PID.");
         Delay.msDelay(3000);
-	    robot.followLine(1000, 0, 2, 3);
+	    robot.followLine(1000, 0, 2, 0);
 	}
 
 }
