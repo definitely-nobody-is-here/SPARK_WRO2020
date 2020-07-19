@@ -291,9 +291,9 @@ public class Robot {
 		//          why is this a one-sensor thing?
 		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		//PID Settings
-		float kP = 1f;
-		float kI = 0.01f;
-		float kD = 1f;
+		float kP = -1f;
+		float kI = -0.01f;
+		float kD = -1f;
 		float integralDecay = 1 / 2;
 
 		// Tacho Count
@@ -312,21 +312,23 @@ public class Robot {
 			// Color Sensor Values
 			float currentError = 0;
 			if(port2 != 0 && port1 != 0) {
-				float colorL = readReflect(2);
-				float colorR = readReflect(3);
+				float colorL = readReflect(port1);
+				float colorR = readReflect(port2);
 				currentError = colorL - colorR;
 			}
 			if(port2 != 0 && port1 == 0) {
-				float colorR = readReflect(3);
+				float colorR = readReflect(port2);
 				currentError = colorR - (maxWhite + maxBlack) / 2;
 			}
 			if(port2 == 0 && port1 != 0) {
-				float colorL = readReflect(2);
+				float colorL = readReflect(port1);
 				currentError = colorL - (maxWhite + maxBlack) / 2;
 			}
 			else {
 				return;
 			}
+			
+			LOG.info("currentError: " + currentError);
 
 			// Change integralError
 			integralError = integralError * integralDecay + currentError;
@@ -351,6 +353,7 @@ public class Robot {
 				motorB.setSpeed(100);
 				motorC.setSpeed(100 - Math.round(error));
 			}
+			LOG.info("error: " + error);
 			motorB.forward();
 			motorC.forward();
 		}
@@ -447,11 +450,11 @@ public class Robot {
 		float maxBlackValue = 100;
 
 		// Calibrate
-		pilot.setLinearSpeed(20);
+		pilot.setLinearSpeed(10);
 		pilot.forward();
 		
 		//Read Values
-		int i = 1000;
+		int i = 30;
 		float colorValue;
 		while(i > 0) {
 			i -= 1;
@@ -466,7 +469,7 @@ public class Robot {
     		System.out.println(maxWhiteValue);
     		System.out.println(maxBlackValue);
     		LOG.info("White: " + maxWhiteValue);
-    		//LOG.info("Black: " + maxBlackValue);
+    		LOG.info("Black: " + maxBlackValue);
 		}
 		
 		//Stop Pilot
