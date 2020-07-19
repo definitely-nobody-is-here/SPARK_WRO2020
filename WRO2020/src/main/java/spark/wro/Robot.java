@@ -346,12 +346,12 @@ public class Robot {
 
 			// Drive Robot
 			if(error < 0) {
-				motorB.setSpeed(100 - Math.round(error));
-				motorC.setSpeed(100);
+				motorB.setSpeed(50 + Math.round(error));
+				motorC.setSpeed(50);
 			}
 			else {
-				motorB.setSpeed(100);
-				motorC.setSpeed(100 - Math.round(error));
+				motorB.setSpeed(50);
+				motorC.setSpeed(50 - Math.round(error));
 			}
 			LOG.info("error: " + error);
 			motorB.forward();
