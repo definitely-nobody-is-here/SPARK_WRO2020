@@ -399,8 +399,6 @@ public class Robot {
 	 * @param port2 | Right sensor port, 0 means only one sensor
 	 */
 	public void followLine(float cm, int stopLine, int port1, int port2) {
-		//          why is this a one-sensor thing?
-		//          both sensors would be better, since the breakages in the line can be ignored by a two-sensor config where the p is just the values of the two sensors subracting from each other
 		// PID Settings
 		float kP = 1.5f;
 		float kI = 0.001f;
