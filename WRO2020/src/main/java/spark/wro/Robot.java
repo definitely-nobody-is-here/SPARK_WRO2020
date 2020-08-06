@@ -422,7 +422,7 @@ public class Robot {
 		if(port2 != 0 && port1 != 0) {
 			LOG.info("PORTS ARE NOT ZERO!!!!!");
 			LOG.warn("invalid port: zero (seriously, WHY THE H WOULD YOU THINK THAT SENSOR 0 WOULD BE A GOOD IDEA. YEA I WANT TO RENT CAR #0!)");
-			LOG.error("invalid port: " + port1 + ", " + port0);
+			LOG.error("invalid port: " + port1 + ", " + port2);
 		}
 		LOG.info("port1: " + port1);
 		LOG.info("port2: " + port2);
